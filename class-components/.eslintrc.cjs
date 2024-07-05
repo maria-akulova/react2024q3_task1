@@ -28,9 +28,16 @@ module.exports = {
     'react-compiler/react-compiler': 'error',
     'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-unused-vars': 'warn',
   },
+  settings: {
+    react: {
+      "version": "detect"
+    }
+  }
 };
