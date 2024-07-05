@@ -3,6 +3,15 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npx validate-branch-name"
+    }
+  },
+  "lint-staged": {
+    "*.{tsx,ts}": "npm run lint:fix"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
