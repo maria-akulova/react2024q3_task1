@@ -9,7 +9,7 @@
     }
   },
   "lint-staged": {
-    "*.{tsx,ts}": "npm run lint"
+    "*.{ts,tsx}": "npm run lint"
   },
   "scripts": {
     "dev": "vite",
