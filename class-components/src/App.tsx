@@ -12,16 +12,18 @@ interface AppState {
 class App extends Component {
   state: AppState = {
     animals: [],
-    loading: true,
+    loading: false,
   };
 
   componentDidMount() {
-    this.getAnimals();
+    const previousSearch = localStorage.getItem('search');
+    previousSearch ? this.getAnimals(previousSearch) : this.getAnimals('');
   }
 
-  async getAnimals() {
+  getAnimals = async (searchTerm: string) => {
+    this.setState({ loading: true });
     await api
-      .getAnimals()
+      .getAnimals(searchTerm)
       .then((res) => {
         this.setState({ animals: res.animals, loading: false });
       })
@@ -29,20 +31,16 @@ class App extends Component {
         console.error('Failed to fetch animals', err);
         this.setState({ loading: false });
       });
-  }
+  };
 
   render() {
     const { animals, loading } = this.state;
 
-    if (loading) {
-      return <Spinner />;
-    }
-
     return (
       <>
         <h1 className="header">Animals</h1>
-        <InputSearch />
-        <ResultSearch animals={animals} />
+        <InputSearch onSearch={this.getAnimals} />
+        {loading ? <Spinner /> : <ResultSearch animals={animals} />}
       </>
     );
   }
