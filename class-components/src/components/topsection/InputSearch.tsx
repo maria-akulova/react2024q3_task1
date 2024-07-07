@@ -38,6 +38,7 @@ export class InputSearch extends Component<InputSearchProps> {
             placeholder="Type to search..."
             value={this.state.searchTerm}
             onChange={this.handleInputChange}
+            maxLength={30}
           />
           <button className={style.searchButton} onClick={this.handleSearch}>
             Search
