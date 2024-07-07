@@ -13,7 +13,7 @@ export class ResultSearch extends Component<ResultSearchProps> {
     if (animal.earthAnimal) return 'Earth Animal';
     if (animal.earthInsect) return 'Earth Insect';
     if (animal.feline) return 'Feline';
-    return 'Unknown';
+    return 'not defined by defualt';
   }
 
   render() {
@@ -22,6 +22,9 @@ export class ResultSearch extends Component<ResultSearchProps> {
     return (
       <>
         <section className={style.section}>
+          {animals.length === 0 && (
+            <div className={style.noResults}>No results. Try another name.</div>
+          )}
           {animals.map((animal) => (
             <div key={animal.uid} className={style.animal}>
               <p>{animal.name}</p>

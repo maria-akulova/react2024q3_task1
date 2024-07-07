@@ -1,13 +1,18 @@
 const api = {
-  getAnimals: async () => {
-    const url = `https://stapi.co/api/v1/rest/animal/search?pageNumber=1&pageSize=50`;
-    return await fetch(url)
+  getAnimals: async (searchTerm: string) => {
+    return await fetch('https://stapi.co/api/v1/rest/animal/search?pageNumber=0&pageSize=20', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams(`name=${searchTerm}`),
+    })
       .then(async (res) => {
-        const data = (await res.json()) as string[];
+        const data = await res.json();
         return data;
       })
       .catch((err) => err);
   },
 };
-
 export default api;
