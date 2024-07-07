@@ -1,0 +1,27 @@
+.section {
+  margin-top: 20px;
+  border: 1px solid red;
+  padding: 10px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+
+.animal {
+  width: 200px;
+  height: 150px;
+  border: 1px solid black;
+  border-radius: 10px;
+  margin: 10px 10px 0 0;
+  padding: 10px;
+  background-color: white;
+  font-size: 2rem;
+}
+
+.description {
+  padding: 10px;
+  font-size: 1rem;
+}
