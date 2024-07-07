@@ -43,3 +43,17 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
+
+.errorButton {
+  align-self: center;
+  margin: 0;
+  padding: 5px 10px;
+  font-size: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+
+  &:hover {
+    background-color: wheat;
+    cursor: pointer;
+  }
+}

@@ -1,5 +1,6 @@
 import { InputSearch } from './topsection/InputSearch';
 import { ResultSearch } from './mainsection/ResultSearch';
+import { Spinner } from './spinner/Spinner';
 
 interface Animal {
   avian: boolean;
@@ -11,5 +12,5 @@ interface Animal {
   uid: string;
 }
 
-export { InputSearch, ResultSearch };
+export { InputSearch, ResultSearch, Spinner };
 export type { Animal };

@@ -33,6 +33,10 @@ class App extends Component {
       });
   };
 
+  handleClick = () => {
+    throw new Error('Test error');
+  };
+
   render() {
     const { animals, loading } = this.state;
 
@@ -40,6 +44,9 @@ class App extends Component {
       <>
         <h1 className="header">Animals</h1>
         <InputSearch onSearch={this.getAnimals} />
+        <button className="errorButton" onClick={this.handleClick}>
+          Throw Test Error
+        </button>
         {loading ? <Spinner /> : <ResultSearch animals={animals} />}
       </>
     );
