@@ -1,8 +1,7 @@
 import { Component } from 'react';
-import { Animal, InputSearch, ResultSearch } from './components/index.ts';
+import { Animal, InputSearch, ResultSearch, Spinner } from './components/index.ts';
 import './App.css';
 import api from './services/api.ts';
-import { Spinner } from './components/spinner/Spinner.tsx';
 
 interface AppState {
   animals: Animal[];
