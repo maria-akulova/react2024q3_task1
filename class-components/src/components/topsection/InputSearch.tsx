@@ -23,6 +23,12 @@ export class InputSearch extends Component<InputSearchProps> {
     localStorage.setItem('search', searchName);
   };
 
+  componentDidMount(): void {
+    const historySearch: string | null = localStorage.getItem('search');
+    const result = historySearch ? historySearch : '';
+    this.setState({ searchTerm: result });
+  }
+
   render() {
     return (
       <>
