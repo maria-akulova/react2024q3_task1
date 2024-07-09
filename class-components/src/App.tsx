@@ -6,12 +6,14 @@ import api from './services/api.ts';
 interface AppState {
   animals: Animal[];
   loading: boolean;
+  error: boolean;
 }
 
 class App extends Component {
   state: AppState = {
     animals: [],
     loading: false,
+    error: false,
   };
 
   componentDidMount() {
@@ -32,18 +34,17 @@ class App extends Component {
       });
   };
 
-  handleClick = () => {
-    throw new Error('Test error');
-  };
-
   render() {
     const { animals, loading } = this.state;
+    if (this.state.error) {
+      throw Error('Test Error');
+    }
 
     return (
       <>
         <h1 className="header">Animals</h1>
         <InputSearch onSearch={this.getAnimals} />
-        <button className="errorButton" onClick={this.handleClick}>
+        <button className="errorButton" onClick={() => this.setState({ error: true })}>
           Throw Test Error
         </button>
         {loading ? <Spinner /> : <ResultSearch animals={animals} />}
