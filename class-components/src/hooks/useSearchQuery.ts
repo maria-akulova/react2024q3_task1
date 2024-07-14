@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
-export const useSearchQuery = () => {
+export const useSearchQuery = (initialQuery = '') => {
   const [searchQuery, setSearchQuery] = useState(() => {
-    return localStorage.getItem('search') || '';
+    return localStorage.getItem('search') || initialQuery;
   });
 
   useEffect(() => {
