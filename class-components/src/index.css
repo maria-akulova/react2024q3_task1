@@ -57,3 +57,7 @@ h1 {
     cursor: pointer;
   }
 }
+
+.page-button.active {
+  background-color: aqua;
+}

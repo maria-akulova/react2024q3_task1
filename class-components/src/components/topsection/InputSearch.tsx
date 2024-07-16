@@ -19,6 +19,7 @@ export const InputSearch: React.FC<InputSearchProps> = ({ onSearch }) => {
     const searchName = trunc(searchTerm);
     setSearchTerm(searchName);
     onSearch(searchName);
+    localStorage.setItem('search', searchTerm);
   };
 
   return (
