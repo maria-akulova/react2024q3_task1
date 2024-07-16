@@ -20,7 +20,10 @@ export const Pagination: React.FC<PaginationProps> = ({
         <button
           key={page}
           className={`${style.page_button} ${page === currentPage ? style.active : ''}`}
-          onClick={() => onPageChange(page)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onPageChange(page);
+          }}
         >
           {page}
         </button>

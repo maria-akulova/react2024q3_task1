@@ -4,6 +4,7 @@ import { Animal, InputSearch, ResultSearch, SearchResult, Spinner } from '../../
 import { Pagination } from '../../components/pagination/Pagination';
 import api from '../../services/api';
 import style from './Animals.module.scss';
+import { useSearchQuery } from '../../hooks/useSearchQuery';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -15,10 +16,10 @@ export const Animals: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useState(1);
+  const [searchTerm] = useSearchQuery();
 
   useEffect(() => {
-    const previousSearch = localStorage.getItem('search') || '';
-    getAnimals(previousSearch, searchParams);
+    getAnimals(searchTerm, searchParams);
   }, [searchParams]);
 
   const getAnimals = async (searchTerm: string, page: number) => {
@@ -36,19 +37,18 @@ export const Animals: React.FC = () => {
   };
 
   const handleAnimalClick = (animalId: string) => {
-    navigate(`/details/${animalId}`);
+    navigate(`/page/${searchParams}/details/${animalId}`);
   };
 
   const handleCloseDetails = () => {
-    navigate('/');
+    navigate(`/page/${searchParams}`);
   };
 
   const handlePageChange = (page: number) => {
-    setSearchParams(() => {
-      return page;
-    });
-    const previousSearch = localStorage.getItem('search') || '';
-    getAnimals(previousSearch, page);
+    setSearchParams(page);
+
+    getAnimals(searchTerm, page);
+    navigate(`/page/${page}`);
   };
 
   if (error) {
@@ -58,7 +58,10 @@ export const Animals: React.FC = () => {
   return (
     <>
       <h1 className="header">Animals</h1>
-      <InputSearch onSearch={(searchTerm) => getAnimals(searchTerm, 1)} />
+      <InputSearch
+        onSearch={(searchTerm) => getAnimals(searchTerm, 1)}
+        currentPage={setSearchParams}
+      />
       <button className="errorButton" onClick={() => setError(true)}>
         Throw Test Error
       </button>

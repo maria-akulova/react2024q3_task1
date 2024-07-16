@@ -5,10 +5,11 @@ import { useSearchQuery } from '../../hooks/useSearchQuery';
 
 interface InputSearchProps {
   onSearch: (searchTerm: string) => void;
+  currentPage: (currentPage: number) => void;
 }
 
-export const InputSearch: React.FC<InputSearchProps> = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useSearchQuery('');
+export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, currentPage }) => {
+  const [searchTerm, setSearchTerm] = useSearchQuery();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -19,7 +20,7 @@ export const InputSearch: React.FC<InputSearchProps> = ({ onSearch }) => {
     const searchName = trunc(searchTerm);
     setSearchTerm(searchName);
     onSearch(searchName);
-    localStorage.setItem('search', searchTerm);
+    currentPage(1);
   };
 
   return (
