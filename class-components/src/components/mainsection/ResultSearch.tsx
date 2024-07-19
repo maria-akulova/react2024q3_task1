@@ -5,9 +5,14 @@ import { Animal } from 'components';
 interface ResultSearchProps {
   animals: Animal[];
   onItemClick: (id: string) => void;
+  activeAnimalId: string | null;
 }
 
-export const ResultSearch: React.FC<ResultSearchProps> = ({ animals, onItemClick }) => {
+export const ResultSearch: React.FC<ResultSearchProps> = ({
+  animals,
+  onItemClick,
+  activeAnimalId,
+}) => {
   return (
     <>
       <section className={style.section}>
@@ -18,7 +23,7 @@ export const ResultSearch: React.FC<ResultSearchProps> = ({ animals, onItemClick
           {animals.map((animal) => (
             <div
               key={animal.uid}
-              className={style.animal}
+              className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''}`}
               onClick={(e) => {
                 e.stopPropagation();
                 onItemClick(animal.uid);
