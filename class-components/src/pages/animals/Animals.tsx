@@ -15,12 +15,13 @@ export const Animals: React.FC = () => {
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
-  const [searchParams, setSearchParams] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm] = useSearchQuery();
+  const [activeAnimalId, setActiveAnimalId] = useState<string | null>(null);
 
   useEffect(() => {
-    getAnimals(searchTerm, searchParams);
-  }, [searchParams]);
+    getAnimals(searchTerm, currentPage);
+  }, [currentPage]);
 
   const getAnimals = async (searchTerm: string, page: number) => {
     setLoading(true);
@@ -37,18 +38,19 @@ export const Animals: React.FC = () => {
   };
 
   const handleAnimalClick = (animalId: string) => {
-    navigate(`/page/${searchParams}/details/${animalId}`);
+    setActiveAnimalId(animalId);
+    navigate(`/page/${currentPage}/details/${animalId}`);
   };
 
   const handleCloseDetails = () => {
-    navigate(`/page/${searchParams}`);
+    setActiveAnimalId(null);
+    navigate(`/page/${currentPage}`);
   };
 
-  const handlePageChange = (page: number) => {
-    setSearchParams(page);
-
-    getAnimals(searchTerm, page);
-    navigate(`/page/${page}`);
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    getAnimals(searchTerm, newPage);
+    navigate(`/page/${newPage}`);
   };
 
   if (error) {
@@ -60,7 +62,7 @@ export const Animals: React.FC = () => {
       <h1 className="header">Animals</h1>
       <InputSearch
         onSearch={(searchTerm) => getAnimals(searchTerm, 1)}
-        currentPage={setSearchParams}
+        currentPage={setCurrentPage}
       />
       <button className="errorButton" onClick={() => setError(true)}>
         Throw Test Error
@@ -70,11 +72,15 @@ export const Animals: React.FC = () => {
           {loading ? (
             <Spinner />
           ) : (
-            <ResultSearch animals={animals} onItemClick={handleAnimalClick} />
+            <ResultSearch
+              animals={animals}
+              onItemClick={handleAnimalClick}
+              activeAnimalId={activeAnimalId}
+            />
           )}
           {totalPages > 1 && (
             <Pagination
-              currentPage={searchParams}
+              currentPage={currentPage}
               totalPages={totalPages}
               onPageChange={handlePageChange}
             />
