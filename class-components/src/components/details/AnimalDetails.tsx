@@ -42,7 +42,9 @@ export const AnimalDetails: React.FC = () => {
       <h2>{animal.name}</h2>
       <p>Unique number: {animal.uid}</p>
       <p>The Type is {getAnimalType(animal)}</p>
-      <button onClick={() => navigate('/')}>Close</button>
+      <button onClick={() => navigate(`/page/${window.location.pathname.split('/')[2]}`)}>
+        Close
+      </button>
     </div>
   );
 };

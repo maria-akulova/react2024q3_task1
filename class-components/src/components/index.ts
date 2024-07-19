@@ -13,5 +13,20 @@ interface Animal {
   uid: string;
 }
 
+interface Page {
+  pageNumber: number;
+  pageSize: number;
+  numberOfElements: number;
+  totalElements: number;
+  totalPages: number;
+  firstPage: boolean;
+  lastPage: boolean;
+}
+
+export interface SearchResult {
+  page: Page;
+  animals: Animal[];
+}
+
 export { InputSearch, ResultSearch, Spinner, ErrorBoundary };
 export type { Animal };

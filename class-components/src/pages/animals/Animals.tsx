@@ -1,26 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Outlet, useParams } from 'react-router-dom';
-import { Animal, InputSearch, ResultSearch, Spinner } from '../../components/index';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
+import { Animal, InputSearch, ResultSearch, SearchResult, Spinner } from '../../components/index';
+import { Pagination } from '../../components/pagination/Pagination';
 import api from '../../services/api';
 import style from './Animals.module.scss';
+import { useSearchQuery } from '../../hooks/useSearchQuery';
+
+const ITEMS_PER_PAGE = 10;
 
 export const Animals: React.FC = () => {
   const [animals, setAnimals] = useState<Animal[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useState(1);
+  const [searchTerm] = useSearchQuery();
 
   useEffect(() => {
-    const previousSearch = localStorage.getItem('search');
-    previousSearch ? getAnimals(previousSearch) : getAnimals('');
-  }, []);
+    getAnimals(searchTerm, searchParams);
+  }, [searchParams]);
 
-  const getAnimals = async (searchTerm: string) => {
+  const getAnimals = async (searchTerm: string, page: number) => {
     setLoading(true);
     try {
-      const res = await api.getAnimals(searchTerm);
+      const res = (await api.getAnimals(searchTerm, ITEMS_PER_PAGE, page)) as SearchResult;
       setAnimals(res.animals);
+      setTotalPages(res.page.totalPages);
+
     } catch (err) {
       console.error('Failed to fetch animals', err);
       setError(true);
@@ -30,11 +38,17 @@ export const Animals: React.FC = () => {
   };
 
   const handleAnimalClick = (animalId: string) => {
-    navigate(`/details/${animalId}`);
+    navigate(`/page/${searchParams}/details/${animalId}`);
   };
 
   const handleCloseDetails = () => {
-    navigate('/');
+    navigate(`/page/${searchParams}`);
+  };
+
+  const handlePageChange = (page: number) => {
+    setSearchParams(page);
+    getAnimals(searchTerm, page);
+    navigate(`/page/${page}`);
   };
 
   if (error) {
@@ -44,7 +58,10 @@ export const Animals: React.FC = () => {
   return (
     <>
       <h1 className="header">Animals</h1>
-      <InputSearch onSearch={getAnimals} />
+      <InputSearch
+        onSearch={(searchTerm) => getAnimals(searchTerm, 1)}
+        currentPage={setSearchParams}
+      />
       <button className="errorButton" onClick={() => setError(true)}>
         Throw Test Error
       </button>
@@ -55,10 +72,19 @@ export const Animals: React.FC = () => {
           ) : (
             <ResultSearch animals={animals} onItemClick={handleAnimalClick} />
           )}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={searchParams}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
         </div>
-        <div className={style.right_section} onClick={(e) => e.stopPropagation()}>
-          {id && <Outlet />}
-        </div>
+        {location.pathname.includes('/details/') && (
+          <div className={style.right_section} onClick={(e) => e.stopPropagation()}>
+            <Outlet />
+          </div>
+        )}
       </div>
     </>
   );
