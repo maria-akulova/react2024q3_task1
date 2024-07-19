@@ -13,7 +13,7 @@ const App: React.FC = () => {
           <Route path="details/:id" element={<AnimalDetails />} />
         </Route>
         <Route path="/*" element={<Animals />} />
-
+        
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

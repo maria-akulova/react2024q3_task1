@@ -51,6 +51,7 @@ export const Animals: React.FC = () => {
     setCurrentPage(newPage);
     getAnimals(searchTerm, newPage);
     navigate(`/page/${newPage}`);
+
   };
 
   if (error) {
@@ -81,6 +82,7 @@ export const Animals: React.FC = () => {
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
+
               totalPages={totalPages}
               onPageChange={handlePageChange}
             />
