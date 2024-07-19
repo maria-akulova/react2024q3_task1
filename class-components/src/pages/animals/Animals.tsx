@@ -28,6 +28,7 @@ export const Animals: React.FC = () => {
       const res = (await api.getAnimals(searchTerm, ITEMS_PER_PAGE, page)) as SearchResult;
       setAnimals(res.animals);
       setTotalPages(res.page.totalPages);
+
     } catch (err) {
       console.error('Failed to fetch animals', err);
       setError(true);
@@ -46,7 +47,6 @@ export const Animals: React.FC = () => {
 
   const handlePageChange = (page: number) => {
     setSearchParams(page);
-
     getAnimals(searchTerm, page);
     navigate(`/page/${page}`);
   };
