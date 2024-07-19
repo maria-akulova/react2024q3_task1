@@ -1,2 +1,4 @@
 cd class-components
+npm run format:fix
+git add .
 npx lint-staged
