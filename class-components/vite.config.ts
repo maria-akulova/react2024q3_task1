@@ -11,6 +11,7 @@ export default defineConfig({
     include: ['**/*.js', '**/*.jsx', '**/*.mjs', '**/*.ts', '**/*.tsx'],
   },
   test: {
+    watch: false,
     coverage: {
       provider: 'v8',
       ignoreEmptyLines: true,

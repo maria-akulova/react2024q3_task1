@@ -85,6 +85,6 @@ const underfinedType = {
   uid: 'felin_uid',
 };
 
-test('Check types: feline ', () => {
+test('Check when type is uknown:  ', () => {
   expect(getAnimalType(underfinedType)).toBe('not defined by default');
 });

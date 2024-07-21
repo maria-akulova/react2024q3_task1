@@ -6,7 +6,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "cd class-components && npm test -- --watchAll=false"
+      "pre-push": "cd class-components && npm test && exit 0"
     }
   },
   "lint-staged": {
