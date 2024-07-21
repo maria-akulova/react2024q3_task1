@@ -17,7 +17,9 @@
     "lint": "eslint .  --max-warnings 0",
     "preview": "vite preview",
     "format:fix": "npx prettier . --write",
-    "prepare": "cd .. && husky class-components/.husky"
+    "prepare": "cd .. && husky class-components/.husky",
+    "test": "vitest --coverage.enabled --coverage.all --coverage.reportOnFailure=true --retry=2",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@types/react": "^18.3.3",
@@ -35,6 +37,7 @@
     "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitejs/plugin-react-swc": "^3.7.0",
+    "@vitest/coverage-v8": "^2.0.3",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
@@ -56,6 +59,7 @@
     "prettier": "^3.3.2",
     "sass": "^1.77.6",
     "typescript": "^5.5.3",
-    "vite": "^5.3.1"
+    "vite": "^5.3.1",
+    "vitest": "^2.0.3"
   }
 }
