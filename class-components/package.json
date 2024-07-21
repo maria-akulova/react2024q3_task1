@@ -5,7 +5,8 @@
   "type": "module",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "pre-push": "cd class-components && npm test"
     }
   },
   "lint-staged": {
