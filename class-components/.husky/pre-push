@@ -1,3 +1,2 @@
 cd class-components
-npm test
-exit 0
+npm run test
