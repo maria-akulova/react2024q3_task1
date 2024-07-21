@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import api from '../../services/api';
-import { Spinner } from '../spinner/Spinner';
-import { Animal } from 'components';
-import { getAnimalType } from '../../utils/HelperString';
+import api from 'src/services/api';
+import { Animal, Spinner } from 'components/index';
+import { getAnimalType } from 'utils/HelperString';
 
 export const AnimalDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();

@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
-import { Animal, InputSearch, ResultSearch, SearchResult, Spinner } from '../../components/index';
-import { Pagination } from '../../components/pagination/Pagination';
-import api from '../../services/api';
+import {
+  Animal,
+  InputSearch,
+  Pagination,
+  ResultSearch,
+  SearchResult,
+  Spinner,
+} from 'components/index';
+import api from 'src/services/api';
 import style from './Animals.module.scss';
-import { useSearchQuery } from '../../hooks/useSearchQuery';
+import { useSearchQuery } from 'hooks/useSearchQuery';
 
 const ITEMS_PER_PAGE = 10;
 

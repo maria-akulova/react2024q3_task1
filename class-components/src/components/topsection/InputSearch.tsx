@@ -1,7 +1,7 @@
 import React, { ChangeEvent, MouseEvent } from 'react';
 import style from './InputSearch.module.scss';
-import { trunc } from '../../utils/HelperString.ts';
-import { useSearchQuery } from '../../hooks/useSearchQuery';
+import { trunc } from 'utils/HelperString.ts';
+import { useSearchQuery } from 'hooks/useSearchQuery';
 
 interface InputSearchProps {
   onSearch: (searchTerm: string) => void;
