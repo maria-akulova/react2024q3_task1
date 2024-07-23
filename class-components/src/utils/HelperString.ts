@@ -12,3 +12,7 @@ export const getAnimalType = (animal: Animal): string => {
   if (animal.feline) return 'Feline';
   return 'not defined by default';
 };
+
+export const restrictNumberAnimals = (pages: number): number => {
+  return pages > 10 ? 10 : pages;
+};

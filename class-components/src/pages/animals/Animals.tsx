@@ -11,8 +11,9 @@ import {
 import api from 'src/services/api';
 import style from './Animals.module.scss';
 import { useSearchQuery } from 'hooks/useSearchQuery';
+import { restrictNumberAnimals } from 'src/utils/HelperString';
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 5;
 
 export const Animals: React.FC = () => {
   const [animals, setAnimals] = useState<Animal[]>([]);
@@ -34,7 +35,7 @@ export const Animals: React.FC = () => {
     try {
       const res = (await api.getAnimals(searchTerm, ITEMS_PER_PAGE, page)) as SearchResult;
       setAnimals(res.animals);
-      setTotalPages(res.page.totalPages);
+      setTotalPages(restrictNumberAnimals(res.page.totalPages));
     } catch (err) {
       console.error('Failed to fetch animals', err);
       setError(true);
@@ -70,18 +71,29 @@ export const Animals: React.FC = () => {
         onSearch={(searchTerm) => getAnimals(searchTerm, 1)}
         currentPage={setCurrentPage}
       />
-      <div className={style.container}>
-        <div className={style.left_section} onClick={handleCloseDetails}>
-          {loading ? (
-            <Spinner />
-          ) : (
-            <ResultSearch
-              animals={animals}
-              onItemClick={handleAnimalClick}
-              activeAnimalId={activeAnimalId}
-            />
-          )}
-          {totalPages > 1 && (
+      <div className={style.search_result}>
+        <div className={style.container}>
+          <div className={style.left_section} onClick={handleCloseDetails}>
+            {loading ? (
+              <Spinner />
+            ) : (
+              <ResultSearch
+                animals={animals}
+                onItemClick={handleAnimalClick}
+                activeAnimalId={activeAnimalId}
+              />
+            )}
+          </div>
+          <div className={style.right_section}>
+            {location.pathname.includes('/details/') && (
+              <div className={style.details} onClick={(e) => e.stopPropagation()}>
+                <Outlet />
+              </div>
+            )}
+          </div>
+        </div>
+        <div>
+          {totalPages > 1 && !loading && (
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -89,11 +101,6 @@ export const Animals: React.FC = () => {
             />
           )}
         </div>
-        {location.pathname.includes('/details/') && (
-          <div className={style.right_section} onClick={(e) => e.stopPropagation()}>
-            <Outlet />
-          </div>
-        )}
       </div>
     </>
   );
