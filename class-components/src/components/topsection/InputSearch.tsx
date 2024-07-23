@@ -1,6 +1,7 @@
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, MouseEvent } from 'react';
 import style from './InputSearch.module.scss';
 import { trunc } from 'utils/HelperString.ts';
+import { useSearchQuery } from 'src/hooks/useSearchQuery';
 
 interface InputSearchProps {
   onSearch: (searchTerm: string) => void;
@@ -8,7 +9,7 @@ interface InputSearchProps {
 }
 
 export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, setCurrentPage }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useSearchQuery();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
