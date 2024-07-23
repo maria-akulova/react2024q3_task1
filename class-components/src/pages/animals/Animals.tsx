@@ -22,12 +22,12 @@ export const Animals: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm] = useSearchQuery();
+  const [searchTerm, setSearchTerm] = useSearchQuery();
   const [activeAnimalId, setActiveAnimalId] = useState<string | null>(null);
 
   useEffect(() => {
     getAnimals(searchTerm, currentPage);
-  }, [currentPage]);
+  }, [searchTerm, currentPage]);
 
   const getAnimals = async (searchTerm: string, page: number) => {
     setLoading(true);
@@ -55,7 +55,6 @@ export const Animals: React.FC = () => {
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
-    getAnimals(searchTerm, newPage);
     navigate(`/page/${newPage}`);
   };
 
@@ -67,8 +66,11 @@ export const Animals: React.FC = () => {
     <>
       <h1 className="header">Animals</h1>
       <InputSearch
-        onSearch={(searchTerm) => getAnimals(searchTerm, 1)}
-        currentPage={setCurrentPage}
+        onSearch={(searchTerm) => {
+          setSearchTerm(searchTerm);
+          getAnimals(searchTerm, 1);
+        }}
+        setCurrentPage={setCurrentPage}
       />
       <div className={style.container}>
         <div className={style.left_section} onClick={handleCloseDetails}>
