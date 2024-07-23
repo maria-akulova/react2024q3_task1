@@ -1,4 +1,4 @@
-import { Animal } from 'components';
+import { Animal } from 'components/index';
 
 export const trunc = (text: string): string => {
   return text.trim();

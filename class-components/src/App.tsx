@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Animals } from './pages/animals/Animals';
-import { NotFound } from './pages/notfound/NotFound';
+import { Animals } from 'pages/animals/Animals';
+import { NotFound } from 'pages/notfound/NotFound';
 import './App.css';
-import { AnimalDetails } from './components/details/AnimalDetails';
+import { AnimalDetails } from 'components/index';
 
 const App: React.FC = () => {
   return (

@@ -19,26 +19,34 @@
     "format:fix": "npx prettier . --write",
     "prepare": "cd .. && husky class-components/.husky",
     "test": "vitest --coverage.enabled --coverage.all --coverage.reportOnFailure=true --retry=2",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui --coverage.enabled --coverage.all --coverage.reportOnFailure=true --retry=2"
   },
   "dependencies": {
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.24.1",
-    "vite-tsconfig-paths": "^4.3.2"
+    "react-router-dom": "^6.25.1",
+    "vite-tsconfig-paths": "^4.3.2",
+    "webdriverio": "^7.16.4"
   },
   "devDependencies": {
     "@eslint/compat": "^1.1.0",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.6.0",
+    "@testing-library/dom": "^10.3.2",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/testing-library__jest-dom": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-react": "^4.3.1",
     "@vitejs/plugin-react-swc": "^3.7.0",
-    "@vitest/coverage-v8": "^2.0.3",
-    "@vitest/ui": "^2.0.3",
+    "@vitest/browser": "^2.0.4",
+    "@vitest/coverage-istanbul": "^2.0.4",
+    "@vitest/coverage-v8": "^2.0.4",
+    "@vitest/ui": "^2.0.4",
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
@@ -54,13 +62,16 @@
     "eslint-plugin-react-refresh": "^0.4.7",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
+    "global-jsdom": "^24.0.0",
     "globals": "^15.8.0",
     "husky": "^9.0.11",
+    "jest-fetch-mock": "^3.0.3",
+    "jsdom": "^24.1.1",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
     "sass": "^1.77.6",
     "typescript": "^5.5.3",
     "vite": "^5.3.1",
-    "vitest": "^2.0.3"
+    "vitest": "^2.0.4"
   }
 }

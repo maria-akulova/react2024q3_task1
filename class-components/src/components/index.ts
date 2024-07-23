@@ -2,6 +2,8 @@ import { InputSearch } from './topsection/InputSearch';
 import { ResultSearch } from './mainsection/ResultSearch';
 import { Spinner } from './spinner/Spinner';
 import ErrorBoundary from './errorboundary/ErrorBoundary';
+import { AnimalDetails } from './details/AnimalDetails';
+import { Pagination } from './pagination/Pagination';
 
 interface Animal {
   avian: boolean;
@@ -28,5 +30,5 @@ export interface SearchResult {
   animals: Animal[];
 }
 
-export { InputSearch, ResultSearch, Spinner, ErrorBoundary };
+export { InputSearch, ResultSearch, Spinner, ErrorBoundary, AnimalDetails, Pagination };
 export type { Animal };

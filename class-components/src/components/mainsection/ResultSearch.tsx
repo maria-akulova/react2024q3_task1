@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './ResultSearch.module.scss';
-import { Animal } from 'components';
+import { Animal } from 'components/index';
 
 interface ResultSearchProps {
   animals: Animal[];
