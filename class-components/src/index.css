@@ -16,6 +16,7 @@
   position: relative;
   background-color: rgb(247, 238, 226);
   padding: 0;
+  background-image: linear-gradient(10deg, #ede089 1%, #bad9ed 90%);
 }
 
 body {
@@ -30,13 +31,11 @@ body {
 }
 
 .header {
-  position: sticky;
   top: 0;
   width: 100vw;
-  background-color: rgb(247, 238, 226);
   margin: 0;
   padding: 0;
-  height: 80px;
+  margin-bottom: 10px;
 }
 
 h1 {

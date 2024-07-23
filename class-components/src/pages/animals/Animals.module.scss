@@ -12,8 +12,6 @@
   width: 70%;
   min-height: 650px;
   flex-direction: column;
-  border-style: double;
-  border-color: grey;
   border-radius: 20px;
   padding: 20px;
   background-image: url(/public/family.jpg);
@@ -29,7 +27,7 @@
 }
 
 .right_section {
-  margin: auto;
+  margin: 10% auto auto;
 }
 
 .details {
