@@ -51,7 +51,7 @@ describe('Smoke Test: run app', () => {
     });
     await userEvent.click(pageLastButton);
     const firstCardItem = await screen.findByText((content, element) => {
-      return element?.tagName.toLowerCase() === 'p' && content === 'Altarian marsupial';
+      return element?.tagName.toLowerCase() === 'p' && content === 'Alopex lagopus';
     });
 
     await waitFor(() => expect(firstCardItem).toBeInTheDocument());

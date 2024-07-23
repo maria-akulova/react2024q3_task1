@@ -25,7 +25,7 @@ export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, setCurrentPa
       <label className={style.searchLabel} htmlFor="searchInput">
         Search by Name of animal
       </label>
-      <section>
+      <section className={style.search_section}>
         <input
           className={style.input}
           type="text"
