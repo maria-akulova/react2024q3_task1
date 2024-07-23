@@ -43,7 +43,7 @@ describe('Smoke Test: run app', () => {
       </BrowserRouter>,
     );
     expect(await screen.findByRole('heading', { name: 'Animals' })).toBeInTheDocument();
-    const usernameInput = await screen.getAllByLabelText('Search by Name of animal')[0];
+    const usernameInput = await screen.getByRole('textbox');
     expect(usernameInput).toBeInTheDocument();
     await fireEvent.change(usernameInput, { target: { value: 'sa' } });
     logDOM(usernameInput);
