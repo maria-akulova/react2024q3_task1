@@ -70,9 +70,6 @@ export const Animals: React.FC = () => {
         onSearch={(searchTerm) => getAnimals(searchTerm, 1)}
         currentPage={setCurrentPage}
       />
-      <button className="errorButton" onClick={() => setError(true)}>
-        Throw Test Error
-      </button>
       <div className={style.container}>
         <div className={style.left_section} onClick={handleCloseDetails}>
           {loading ? (
