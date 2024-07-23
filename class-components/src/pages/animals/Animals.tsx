@@ -56,6 +56,7 @@ export const Animals: React.FC = () => {
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
+    setActiveAnimalId(null);
     navigate(`/page/${newPage}`);
   };
 
@@ -69,7 +70,7 @@ export const Animals: React.FC = () => {
       <InputSearch
         onSearch={(searchTerm) => {
           setSearchTerm(searchTerm);
-          getAnimals(searchTerm, 1);
+          handlePageChange(1);
         }}
         setCurrentPage={setCurrentPage}
       />
