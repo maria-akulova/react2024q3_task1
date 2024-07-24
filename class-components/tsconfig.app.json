@@ -7,7 +7,15 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "baseUrl": "src",
+    "types": ["vitest/globals"],
+    "baseUrl": "./",
+    "paths": {
+      "src/*": ["./src/*"],
+      "components/*": ["./src/components/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "pages/*": ["./src/pages/*"],
+      "utils/*": ["./src/utils/*"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
