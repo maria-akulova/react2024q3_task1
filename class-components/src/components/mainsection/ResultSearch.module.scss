@@ -17,6 +17,11 @@
   padding: 10px;
   background-color: white;
   font-size: 2rem;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(91, 100, 101);
+    color: aliceblue;
+  }
 }
 
 .description,
@@ -30,6 +35,6 @@
 }
 
 .animal.active {
-  background-color: aqua;
+  background-color: rgb(169, 196, 228);
   border: 1px solid black;
 }

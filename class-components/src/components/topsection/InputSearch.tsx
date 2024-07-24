@@ -1,41 +1,39 @@
 import React, { ChangeEvent, MouseEvent } from 'react';
 import style from './InputSearch.module.scss';
 import { trunc } from 'utils/HelperString.ts';
-import { useSearchQuery } from 'hooks/useSearchQuery';
+import { useSearchQuery } from 'src/hooks/useSearchQuery';
 
 interface InputSearchProps {
   onSearch: (searchTerm: string) => void;
-  currentPage: (currentPage: number) => void;
+  setCurrentPage: (currentPage: number) => void;
 }
 
-export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, currentPage }) => {
-  const [searchTerm, setSearchTerm] = useSearchQuery();
+export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, setCurrentPage }) => {
+  const [inputValue, setInputValue] = useSearchQuery();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    setInputValue(event.target.value);
   };
 
   const handleSearch = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const searchName = trunc(searchTerm);
-    setSearchTerm(searchName);
-    onSearch(searchName);
-    currentPage(1);
+    onSearch(trunc(inputValue));
+    setCurrentPage(1);
   };
 
   return (
     <>
       <label className={style.searchLabel} htmlFor="searchInput">
-        Search by Name of animal
+        Help the family to find interesting animal!
       </label>
-      <section>
+      <section className={style.search_section}>
         <input
           className={style.input}
           type="text"
           id="searchInput"
           name="searchInput"
           placeholder="Type to search..."
-          value={searchTerm}
+          value={inputValue}
           onChange={handleInputChange}
           maxLength={30}
         />

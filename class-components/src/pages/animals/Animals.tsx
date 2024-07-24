@@ -11,8 +11,9 @@ import {
 import api from 'src/services/api';
 import style from './Animals.module.scss';
 import { useSearchQuery } from 'hooks/useSearchQuery';
+import { restrictNumberAnimals } from 'src/utils/HelperString';
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 5;
 
 export const Animals: React.FC = () => {
   const [animals, setAnimals] = useState<Animal[]>([]);
@@ -22,19 +23,19 @@ export const Animals: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
-  const [searchTerm] = useSearchQuery();
+  const [searchTerm, setSearchTerm] = useSearchQuery();
   const [activeAnimalId, setActiveAnimalId] = useState<string | null>(null);
 
   useEffect(() => {
     getAnimals(searchTerm, currentPage);
-  }, [currentPage]);
+  }, [searchTerm, currentPage]);
 
   const getAnimals = async (searchTerm: string, page: number) => {
     setLoading(true);
     try {
       const res = (await api.getAnimals(searchTerm, ITEMS_PER_PAGE, page)) as SearchResult;
       setAnimals(res.animals);
-      setTotalPages(res.page.totalPages);
+      setTotalPages(restrictNumberAnimals(res.page.totalPages));
     } catch (err) {
       console.error('Failed to fetch animals', err);
       setError(true);
@@ -55,7 +56,7 @@ export const Animals: React.FC = () => {
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
-    getAnimals(searchTerm, newPage);
+    setActiveAnimalId(null);
     navigate(`/page/${newPage}`);
   };
 
@@ -67,24 +68,35 @@ export const Animals: React.FC = () => {
     <>
       <h1 className="header">Animals</h1>
       <InputSearch
-        onSearch={(searchTerm) => getAnimals(searchTerm, 1)}
-        currentPage={setCurrentPage}
+        onSearch={(searchTerm) => {
+          setSearchTerm(searchTerm);
+          handlePageChange(1);
+        }}
+        setCurrentPage={setCurrentPage}
       />
-      <button className="errorButton" onClick={() => setError(true)}>
-        Throw Test Error
-      </button>
-      <div className={style.container}>
-        <div className={style.left_section} onClick={handleCloseDetails}>
-          {loading ? (
-            <Spinner />
-          ) : (
-            <ResultSearch
-              animals={animals}
-              onItemClick={handleAnimalClick}
-              activeAnimalId={activeAnimalId}
-            />
-          )}
-          {totalPages > 1 && (
+      <div className={style.search_result}>
+        <div className={style.container}>
+          <div className={style.left_section} onClick={handleCloseDetails}>
+            {loading ? (
+              <Spinner />
+            ) : (
+              <ResultSearch
+                animals={animals}
+                onItemClick={handleAnimalClick}
+                activeAnimalId={activeAnimalId}
+              />
+            )}
+          </div>
+          <div className={style.right_section}>
+            {location.pathname.includes('/details/') && (
+              <div className={style.details} onClick={(e) => e.stopPropagation()}>
+                <Outlet />
+              </div>
+            )}
+          </div>
+        </div>
+        <div>
+          {totalPages > 1 && !loading && (
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -92,11 +104,6 @@ export const Animals: React.FC = () => {
             />
           )}
         </div>
-        {location.pathname.includes('/details/') && (
-          <div className={style.right_section} onClick={(e) => e.stopPropagation()}>
-            <Outlet />
-          </div>
-        )}
       </div>
     </>
   );
