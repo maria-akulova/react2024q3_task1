@@ -7,7 +7,7 @@ import { AnimalDetails } from 'components/index';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div className="app">
       <Routes>
         <Route path="/page/:id" element={<Animals />}>
           <Route path="details/:id" element={<AnimalDetails />} />
