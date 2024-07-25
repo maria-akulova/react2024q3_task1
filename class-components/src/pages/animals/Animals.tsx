@@ -66,7 +66,6 @@ export const Animals: React.FC = () => {
 
   return (
     <>
-      <h1 className="header">Animals</h1>
       <InputSearch
         onSearch={(searchTerm) => {
           setSearchTerm(searchTerm);

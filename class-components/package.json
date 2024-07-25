@@ -19,7 +19,7 @@
     "format:fix": "npx prettier . --write",
     "prepare": "cd .. && husky class-components/.husky",
     "test": "vitest --coverage.enabled --coverage.all --coverage.reportOnFailure=true --retry=2",
-    "test:ui": "vitest --ui --coverage.enabled --coverage.all --coverage.reportOnFailure=true --retry=2"
+    "test:ui": "vitest --ui --coverage.enabled --coverage.all --coverage.reportOnFailure=true --retry=1"
   },
   "dependencies": {
     "react": "^18.3.1",

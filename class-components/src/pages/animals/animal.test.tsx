@@ -19,17 +19,6 @@ describe('Smoke Test: run app', () => {
     expect(await screen.findByRole('heading', { name: '404 - Not Found' })).toBeInTheDocument();
   });
 
-  test('Header is visible', async () => {
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Route path="/*" element={<Animals />} />
-        </Routes>
-      </BrowserRouter>,
-    );
-    expect(await screen.findByRole('heading', { name: 'Animals' })).toBeInTheDocument();
-  });
-
   test('User can open PDP', async () => {
     render(
       <BrowserRouter>
@@ -42,7 +31,6 @@ describe('Smoke Test: run app', () => {
         ,
       </BrowserRouter>,
     );
-    expect(await screen.findByRole('heading', { name: 'Animals' })).toBeInTheDocument();
     const usernameInput = await screen.getByRole('textbox');
     expect(usernameInput).toBeInTheDocument();
     await fireEvent.change(usernameInput, { target: { value: 'sa' } });
