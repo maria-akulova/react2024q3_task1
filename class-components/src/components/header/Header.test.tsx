@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { render, screen } from '@testing-library/react';
 import { ThemeContext } from 'src/context/ThemeContext';
 import { Header } from './Header';
@@ -7,10 +6,8 @@ import userEvent from '@testing-library/user-event';
 describe('Header', () => {
   test('Header is visible', async () => {
     const TestComponent = () => {
-      const [theme, setTheme] = useState('light');
-
       return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
+        <ThemeContext.Provider value={{ theme: 'light', setTheme: vi.fn() }}>
           <Header />
         </ThemeContext.Provider>
       );
@@ -21,10 +18,8 @@ describe('Header', () => {
 
   test('Change Theme', async () => {
     const TestComponent = () => {
-      const [theme, setTheme] = useState('light');
-
       return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
+        <ThemeContext.Provider value={{ theme: 'light', setTheme: vi.fn() }}>
           <Header />
         </ThemeContext.Provider>
       );

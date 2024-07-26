@@ -9,11 +9,6 @@
   }
   & .theme {
     margin: 10px 10px 0 0;
-    & .theme_button {
-      border-radius: 5px;
-      border: 0.1px solid black;
-      padding: 5px;
-    }
   }
 }
 
@@ -68,6 +63,7 @@ label {
   border-right-style: solid;
   background-color: white;
   color: black;
+  font-size: 1.7rem;
 }
 
 .input_dark:checked ~ .switch .label_dark {
@@ -75,4 +71,11 @@ label {
   border-left-style: solid;
   background-color: darkblue;
   color: white;
+  font-size: 1.7rem;
+}
+
+.input_dark:checked ~ .switch .label_light,
+.input_light:checked ~ .switch .label_dark {
+  color: white;
+  opacity: 0.5;
 }

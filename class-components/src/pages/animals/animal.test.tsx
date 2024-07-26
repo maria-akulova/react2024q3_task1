@@ -6,30 +6,35 @@ import { Animals } from './Animals';
 import userEvent from '@testing-library/user-event';
 import { NotFound } from '../notfound/NotFound';
 import { AnimalDetails } from 'src/components';
+import { ThemeContext } from 'src/context/ThemeContext';
 
 describe('Smoke Test: run app', () => {
   test('Page is not found', async () => {
     render(
-      <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>,
+      <ThemeContext.Provider value={{ theme: 'light', setTheme: vi.fn() }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeContext.Provider>,
     );
     expect(await screen.findByRole('heading', { name: '404 - Not Found' })).toBeInTheDocument();
   });
 
   test('User can open PDP', async () => {
     render(
-      <BrowserRouter>
-        <Routes>
-          <Route path="/page/:id" element={<Animals />}>
-            <Route path="details/:id" element={<AnimalDetails />} />
-          </Route>
-          <Route path="/*" element={<Animals />} />
-        </Routes>
-        ,
-      </BrowserRouter>,
+      <ThemeContext.Provider value={{ theme: 'light', setTheme: vi.fn() }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/page/:id" element={<Animals />}>
+              <Route path="details/:id" element={<AnimalDetails />} />
+            </Route>
+            <Route path="/*" element={<Animals />} />
+          </Routes>
+          ,
+        </BrowserRouter>
+      </ThemeContext.Provider>,
     );
     const usernameInput = await screen.getByRole('textbox');
     expect(usernameInput).toBeInTheDocument();

@@ -9,10 +9,9 @@ interface InputSearchProps {
   setCurrentPage: (currentPage: number) => void;
 }
 
-const { theme } = useThemeContext();
-
 export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, setCurrentPage }) => {
   const [inputValue, setInputValue] = useSearchQuery();
+  const { theme } = useThemeContext();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
