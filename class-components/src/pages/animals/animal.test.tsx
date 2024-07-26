@@ -1,41 +1,37 @@
 import { describe, expect, test } from 'vitest';
-import { fireEvent, logDOM, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, logDOM, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Animals } from './Animals';
 import userEvent from '@testing-library/user-event';
 import { NotFound } from '../notfound/NotFound';
 import { AnimalDetails } from 'src/components';
-import { ThemeContext } from 'src/context/ThemeContext';
+import { customRender } from 'src/tests/CustomRender';
 
 describe('Smoke Test: run app', () => {
+  const initialEntries = ['/page/:id'];
+  const TestComponent = () => {
+    return (
+      <Routes>
+        <Route path="/page/:id" element={<Animals />}>
+          <Route path="details/:id" element={<AnimalDetails />} />
+        </Route>
+      </Routes>
+    );
+  };
+
   test('Page is not found', async () => {
-    render(
-      <ThemeContext.Provider value={{ theme: 'light', setTheme: vi.fn() }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </ThemeContext.Provider>,
+    customRender(
+      <Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>,
     );
     expect(await screen.findByRole('heading', { name: '404 - Not Found' })).toBeInTheDocument();
   });
 
   test('User can open PDP', async () => {
-    render(
-      <ThemeContext.Provider value={{ theme: 'light', setTheme: vi.fn() }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/page/:id" element={<Animals />}>
-              <Route path="details/:id" element={<AnimalDetails />} />
-            </Route>
-            <Route path="/*" element={<Animals />} />
-          </Routes>
-          ,
-        </BrowserRouter>
-      </ThemeContext.Provider>,
-    );
+    customRender(<TestComponent />, { initialEntries });
+
     const usernameInput = await screen.getByRole('textbox');
     expect(usernameInput).toBeInTheDocument();
     await fireEvent.change(usernameInput, { target: { value: 'sa' } });

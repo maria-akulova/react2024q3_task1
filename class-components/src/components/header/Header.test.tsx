@@ -4,27 +4,22 @@ import { Header } from './Header';
 import userEvent from '@testing-library/user-event';
 
 describe('Header', () => {
+  const TestComponent = () => {
+    return (
+      <ThemeContext.Provider value={{ theme: 'light', setTheme: vi.fn() }}>
+        <Header />
+      </ThemeContext.Provider>
+    );
+  };
+
   test('Header is visible', async () => {
-    const TestComponent = () => {
-      return (
-        <ThemeContext.Provider value={{ theme: 'light', setTheme: vi.fn() }}>
-          <Header />
-        </ThemeContext.Provider>
-      );
-    };
     render(<TestComponent />);
     expect(screen.getByRole('heading', { name: 'Animals' })).toBeInTheDocument();
   });
 
   test('Change Theme', async () => {
-    const TestComponent = () => {
-      return (
-        <ThemeContext.Provider value={{ theme: 'light', setTheme: vi.fn() }}>
-          <Header />
-        </ThemeContext.Provider>
-      );
-    };
     render(<TestComponent />);
+
     expect(screen.getByTestId('theme-checkbox')).toBeInTheDocument();
     await userEvent.click(screen.getByTestId('theme-dark'));
     await userEvent.click(screen.getByTestId('theme-light'));
