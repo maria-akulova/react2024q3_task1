@@ -1,15 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import style from './Header.module.scss';
-import { ThemeContext } from 'src/context/ThemeContext';
+import { useThemeContext } from 'src/hooks/useThemeContext';
 
 export const Header: React.FC = () => {
-  const themeContextGlobal = useContext(ThemeContext);
-
-  if (!themeContextGlobal) {
-    throw new Error('Header must be used within a ThemeContext provider');
-  }
-
-  const { setTheme, theme } = themeContextGlobal;
+  const { theme, setTheme } = useThemeContext();
 
   return (
     <>

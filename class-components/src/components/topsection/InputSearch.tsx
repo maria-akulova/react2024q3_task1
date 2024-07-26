@@ -2,11 +2,14 @@ import React, { ChangeEvent, MouseEvent } from 'react';
 import style from './InputSearch.module.scss';
 import { trunc } from 'utils/HelperString.ts';
 import { useSearchQuery } from 'src/hooks/useSearchQuery';
+import { useThemeContext } from 'src/hooks/useThemeContext';
 
 interface InputSearchProps {
   onSearch: (searchTerm: string) => void;
   setCurrentPage: (currentPage: number) => void;
 }
+
+const { theme } = useThemeContext();
 
 export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, setCurrentPage }) => {
   const [inputValue, setInputValue] = useSearchQuery();
@@ -28,7 +31,7 @@ export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, setCurrentPa
       </label>
       <section className={style.search_section}>
         <input
-          className={style.input}
+          className={`${style.input} ${style[theme]}`}
           type="text"
           id="searchInput"
           name="searchInput"
@@ -37,7 +40,7 @@ export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, setCurrentPa
           onChange={handleInputChange}
           maxLength={30}
         />
-        <button className={style.searchButton} onClick={handleSearch}>
+        <button className={`${style.searchButton} ${style[theme]}`} onClick={handleSearch}>
           Search
         </button>
       </section>
