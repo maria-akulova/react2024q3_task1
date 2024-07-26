@@ -24,6 +24,11 @@
   }
 }
 
+.searchButton.dark:hover {
+  background-color: grey;
+  cursor: pointer;
+}
+
 .searchLabel {
   font-size: 3rem;
 }
