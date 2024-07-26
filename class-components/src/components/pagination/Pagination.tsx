@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './Pagination.module.scss';
+import { useThemeContext } from 'src/hooks/useThemeContext';
 
 interface PaginationProps {
   currentPage: number;
@@ -13,13 +14,14 @@ export const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
 }) => {
   const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+  const { theme } = useThemeContext();
 
   return (
     <div className={style.pagination}>
       {pages.map((page) => (
         <button
           key={page}
-          className={`${style.page_button} ${page === currentPage ? style.active : ''}`}
+          className={`${style.page_button} ${page === currentPage ? style.active : ''} ${style[theme]}`}
           onClick={(e) => {
             e.stopPropagation();
             onPageChange(page);
