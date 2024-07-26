@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Animals } from 'pages/animals/Animals';
 import { NotFound } from 'pages/notfound/NotFound';
@@ -9,9 +9,16 @@ import { ThemeContext } from 'src/context/ThemeContext';
 
 const App: React.FC = () => {
   const [theme, setTheme] = useState('light');
+  const contextValue = useMemo(
+    () => ({
+      theme,
+      setTheme,
+    }),
+    [theme, setTheme],
+  );
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       <div className={`app ${theme}`}>
         <Header />
         <Routes>
