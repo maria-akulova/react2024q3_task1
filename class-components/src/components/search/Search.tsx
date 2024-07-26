@@ -1,5 +1,5 @@
 import React, { ChangeEvent, MouseEvent } from 'react';
-import style from './InputSearch.module.scss';
+import style from './Search.module.scss';
 import { trunc } from 'utils/HelperString.ts';
 import { useSearchQuery } from 'src/hooks/useSearchQuery';
 import { useThemeContext } from 'src/hooks/useThemeContext';
@@ -9,7 +9,7 @@ interface InputSearchProps {
   setCurrentPage: (currentPage: number) => void;
 }
 
-export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, setCurrentPage }) => {
+export const Search: React.FC<InputSearchProps> = ({ onSearch, setCurrentPage }) => {
   const [inputValue, setInputValue] = useSearchQuery();
   const { theme } = useThemeContext();
 

@@ -1,5 +1,5 @@
-import { InputSearch } from './topsection/InputSearch';
-import { ResultSearch } from './mainsection/ResultSearch';
+import { Search } from './search/Search';
+import { ResultSearch } from './resultsearch/ResultSearch';
 import { Spinner } from './spinner/Spinner';
 import ErrorBoundary from './errorboundary/ErrorBoundary';
 import { AnimalDetails } from './details/AnimalDetails';
@@ -30,5 +30,5 @@ export interface SearchResult {
   animals: Animal[];
 }
 
-export { InputSearch, ResultSearch, Spinner, ErrorBoundary, AnimalDetails, Pagination };
+export { Search as InputSearch, ResultSearch, Spinner, ErrorBoundary, AnimalDetails, Pagination };
 export type { Animal };
