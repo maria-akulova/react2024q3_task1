@@ -1,0 +1,14 @@
+.close_button {
+  border-radius: 5px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.close_button.dark {
+  background-color: grey;
+  color: white;
+  border-color: white;
+  &:hover {
+    background-color: rgb(70, 66, 66);
+  }
+}
