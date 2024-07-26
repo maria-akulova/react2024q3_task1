@@ -1,6 +1,7 @@
 import React from 'react';
 import style from './ResultSearch.module.scss';
 import { Animal } from 'components/index';
+import { useThemeContext } from 'src/hooks/useThemeContext';
 
 interface ResultSearchProps {
   animals: Animal[];
@@ -13,6 +14,8 @@ export const ResultSearch: React.FC<ResultSearchProps> = ({
   onItemClick,
   activeAnimalId,
 }) => {
+  const { theme } = useThemeContext();
+
   return (
     <>
       <section className={style.section}>
@@ -23,7 +26,7 @@ export const ResultSearch: React.FC<ResultSearchProps> = ({
           {animals.map((animal) => (
             <div
               key={animal.uid}
-              className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''}`}
+              className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''} ${style[theme]}`}
               onClick={(e) => {
                 e.stopPropagation();
                 onItemClick(animal.uid);

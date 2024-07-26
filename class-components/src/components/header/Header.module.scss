@@ -1,0 +1,81 @@
+.header {
+  display: flex;
+  margin-top: 10px;
+  height: auto;
+  & h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+    flex-grow: 1;
+  }
+  & .theme {
+    margin: 10px 10px 0 0;
+  }
+}
+
+form {
+  position: relative;
+  & input {
+    display: none;
+  }
+}
+
+.switch {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 42px;
+  background: grey;
+  transition: all 0.2s ease;
+  border-radius: 20px;
+  border: 1px black solid;
+}
+
+.switch label {
+  cursor: pointer;
+  color: rgba(0, 0, 0, 0.2);
+  width: 50px;
+  transition: all 0.2s ease;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+label {
+  height: 40px;
+  top: 0px;
+  align-content: center;
+  border-radius: 20px;
+  margin-top: 1px;
+}
+
+.label_light {
+  position: absolute;
+  left: 0px;
+}
+
+.label_dark {
+  position: absolute;
+  right: 0px;
+}
+
+.input_light:checked ~ .switch .label_light {
+  border-right-color: white;
+  border-right-style: solid;
+  background-color: white;
+  color: black;
+  font-size: 1.7rem;
+}
+
+.input_dark:checked ~ .switch .label_dark {
+  border-right-color: darkgrey;
+  border-left-style: solid;
+  background-color: darkblue;
+  color: white;
+  font-size: 1.7rem;
+}
+
+.input_dark:checked ~ .switch .label_light,
+.input_light:checked ~ .switch .label_dark {
+  color: white;
+  opacity: 0.5;
+}

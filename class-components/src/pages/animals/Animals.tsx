@@ -12,6 +12,7 @@ import api from 'src/services/api';
 import style from './Animals.module.scss';
 import { useSearchQuery } from 'hooks/useSearchQuery';
 import { restrictNumberAnimals } from 'src/utils/HelperString';
+import { useThemeContext } from 'src/hooks/useThemeContext';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -25,6 +26,7 @@ export const Animals: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useSearchQuery();
   const [activeAnimalId, setActiveAnimalId] = useState<string | null>(null);
+  const { theme } = useThemeContext();
 
   useEffect(() => {
     getAnimals(searchTerm, currentPage);
@@ -66,7 +68,6 @@ export const Animals: React.FC = () => {
 
   return (
     <>
-      <h1 className="header">Animals</h1>
       <InputSearch
         onSearch={(searchTerm) => {
           setSearchTerm(searchTerm);
@@ -89,7 +90,10 @@ export const Animals: React.FC = () => {
           </div>
           <div className={style.right_section}>
             {location.pathname.includes('/details/') && (
-              <div className={style.details} onClick={(e) => e.stopPropagation()}>
+              <div
+                className={`${style.details} ${style[theme]}`}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <Outlet />
               </div>
             )}

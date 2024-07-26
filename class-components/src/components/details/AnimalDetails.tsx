@@ -3,12 +3,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import api from 'src/services/api';
 import { Animal, Spinner } from 'components/index';
 import { getAnimalType } from 'utils/HelperString';
+import style from './AnimalDetails.module.scss';
+import { useThemeContext } from 'src/hooks/useThemeContext';
 
 export const AnimalDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [animal, setAnimal] = useState<Animal | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { theme } = useThemeContext();
 
   useEffect(() => {
     if (id) {
@@ -41,7 +44,10 @@ export const AnimalDetails: React.FC = () => {
       <h2>{animal.name}</h2>
       <p>Unique number: {animal.uid}</p>
       <p>The Type is {getAnimalType(animal)}</p>
-      <button onClick={() => navigate(`/page/${window.location.pathname.split('/')[2]}`)}>
+      <button
+        className={`${style.close_button} ${style[theme]}`}
+        onClick={() => navigate(`/page/${window.location.pathname.split('/')[2]}`)}
+      >
         Close
       </button>
     </div>

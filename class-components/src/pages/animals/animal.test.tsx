@@ -1,48 +1,37 @@
 import { describe, expect, test } from 'vitest';
-import { fireEvent, logDOM, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, logDOM, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { Animals } from './Animals';
 import userEvent from '@testing-library/user-event';
 import { NotFound } from '../notfound/NotFound';
 import { AnimalDetails } from 'src/components';
+import { customRender } from 'src/tests/CustomRender';
 
 describe('Smoke Test: run app', () => {
+  const initialEntries = ['/page/:id'];
+  const TestComponent = () => {
+    return (
+      <Routes>
+        <Route path="/page/:id" element={<Animals />}>
+          <Route path="details/:id" element={<AnimalDetails />} />
+        </Route>
+      </Routes>
+    );
+  };
+
   test('Page is not found', async () => {
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>,
+    customRender(
+      <Routes>
+        <Route path="*" element={<NotFound />} />
+      </Routes>,
     );
     expect(await screen.findByRole('heading', { name: '404 - Not Found' })).toBeInTheDocument();
   });
 
-  test('Header is visible', async () => {
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Route path="/*" element={<Animals />} />
-        </Routes>
-      </BrowserRouter>,
-    );
-    expect(await screen.findByRole('heading', { name: 'Animals' })).toBeInTheDocument();
-  });
-
   test('User can open PDP', async () => {
-    render(
-      <BrowserRouter>
-        <Routes>
-          <Route path="/page/:id" element={<Animals />}>
-            <Route path="details/:id" element={<AnimalDetails />} />
-          </Route>
-          <Route path="/*" element={<Animals />} />
-        </Routes>
-        ,
-      </BrowserRouter>,
-    );
-    expect(await screen.findByRole('heading', { name: 'Animals' })).toBeInTheDocument();
+    customRender(<TestComponent />, { initialEntries });
+
     const usernameInput = await screen.getByRole('textbox');
     expect(usernameInput).toBeInTheDocument();
     await fireEvent.change(usernameInput, { target: { value: 'sa' } });
