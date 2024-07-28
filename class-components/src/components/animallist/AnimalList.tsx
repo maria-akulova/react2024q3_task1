@@ -21,7 +21,6 @@ export const ResultSearch: React.FC<ResultSearchProps> = ({
   const dispatch = useDispatch();
 
   const handleCheckboxChange = (animal: Animal) => {
-    console.log(`${animal.name} is ${animal.checked ? 'checked' : 'unchecked'}`);
     if (animal.checked) {
       dispatch(increment());
       const animalNew = { id: animal.uid, ...animal };

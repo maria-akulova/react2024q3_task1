@@ -59,12 +59,19 @@ describe('Smoke Test: run app', () => {
     });
 
     await waitFor(() => expect(pdp).toBeInTheDocument());
-    logDOM(pdp);
 
     const closePDP = await screen.findByText('Close');
     logDOM(closePDP);
 
     expect(closePDP).toBeInTheDocument();
     userEvent.click(closePDP);
+
+    const allCheckboxes = await screen.findAllByRole('checkbox');
+    const firstCheckbox = allCheckboxes[0];
+    userEvent.click(firstCheckbox);
+    expect(await screen.findByText('1 item is selected')).toBeInTheDocument();
+    userEvent.click(firstCheckbox);
+    expect(await screen.findByText('1 item is selected')).toBeInTheDocument();
+    expect(screen.queryByText('1 item is selected')).not.toBeInTheDocument();
   });
 });
