@@ -3,6 +3,8 @@ import { render, RenderOptions, RenderResult } from '@testing-library/react';
 import { MemoryRouter, MemoryRouterProps } from 'react-router-dom';
 import { ReactElement, ReactNode } from 'react';
 import { Header } from 'src/components/header/Header';
+import { Provider } from 'react-redux';
+import store from 'src/store';
 
 interface IExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   initialEntries?: MemoryRouterProps['initialEntries'];
@@ -17,10 +19,12 @@ export const customRender = (ui: ReactElement, options?: IExtendedRenderOptions)
 
   const Wrapper = ({ children }: { children: ReactNode }) => {
     return (
-      <ThemeContext.Provider value={options?.theme ?? defaultTheme}>
-        <Header />
-        <MemoryRouter initialEntries={options?.initialEntries ?? ['/*']}>{children}</MemoryRouter>
-      </ThemeContext.Provider>
+      <Provider store={store}>
+        <ThemeContext.Provider value={options?.theme ?? defaultTheme}>
+          <Header />
+          <MemoryRouter initialEntries={options?.initialEntries ?? ['/*']}>{children}</MemoryRouter>
+        </ThemeContext.Provider>
+      </Provider>
     );
   };
 

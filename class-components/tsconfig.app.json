@@ -12,6 +12,7 @@
     "paths": {
       "src/*": ["./src/*"],
       "components/*": ["./src/components/*"],
+      "features/*": ["./src/features/*"],
       "hooks/*": ["./src/hooks/*"],
       "pages/*": ["./src/pages/*"],
       "utils/*": ["./src/utils/*"]
