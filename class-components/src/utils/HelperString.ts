@@ -16,3 +16,11 @@ export const getAnimalType = (animal: Animal): string => {
 export const restrictNumberAnimals = (pages: number): number => {
   return pages > 10 ? 10 : pages;
 };
+
+export const convertToCSV = (data: Animal[]): string => {
+  const header = Object.keys(data[0]);
+  const rows = data.map((item) =>
+    header.map((fieldName) => JSON.stringify(item[fieldName as keyof Animal])).join(','),
+  );
+  return [header.join(','), ...rows].join('\n');
+};

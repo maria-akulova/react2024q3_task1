@@ -42,11 +42,15 @@
   position: fixed;
   bottom: 0;
   min-width: 768px;
-  background-color: grey;
   text-align: center;
   padding: 20px;
   border-top: 1px solid #ccc;
   font-size: 2rem;
   border-radius: 10px;
-  color: white;
+  & button {
+    height: 40px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 20px;
+  }
 }
