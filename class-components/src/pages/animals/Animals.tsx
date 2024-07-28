@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import {
   Animal,
-  AnimalListRedux,
   InputSearch,
   Pagination,
   ResultSearch,
@@ -81,13 +80,6 @@ export const Animals: React.FC = () => {
       />
       <div className={style.search_result}>
         <div className={style.container}>
-          <div className={style.left_section} onClick={handleCloseDetails}>
-            {loading ? (
-              <Spinner />
-            ) : (
-              <AnimalListRedux onItemClick={handleAnimalClick} activeAnimalId={activeAnimalId} />
-            )}
-          </div>
           <div className={style.left_section} onClick={handleCloseDetails}>
             {loading ? (
               <Spinner />
