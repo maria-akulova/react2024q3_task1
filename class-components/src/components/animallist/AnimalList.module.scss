@@ -9,6 +9,16 @@
   justify-content: center;
 }
 
+.animal_items {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  & input {
+    width: 15px;
+    height: 15px;
+  }
+}
+
 .animal {
   width: 200px;
   border: 1px solid black;

@@ -7,6 +7,7 @@ export const animals = {
     feline: false,
     name: 'avian',
     uid: 'avian_uid',
+    checked: false,
   },
   canineAnimal: {
     avian: false,
@@ -16,6 +17,7 @@ export const animals = {
     feline: false,
     name: 'canine',
     uid: 'canine_uid',
+    checked: false,
   },
   earthAnimal: {
     avian: false,
@@ -25,6 +27,7 @@ export const animals = {
     feline: false,
     name: 'earthAnimal',
     uid: 'earth_uid',
+    checked: false,
   },
 
   earthInsect: {
@@ -35,6 +38,7 @@ export const animals = {
     feline: false,
     name: 'earthInsect',
     uid: 'earthInsect_uid',
+    checked: false,
   },
   felineAnimal: {
     avian: false,
@@ -44,6 +48,7 @@ export const animals = {
     feline: true,
     name: 'feline',
     uid: 'felin_uid',
+    checked: false,
   },
   underfinedType: {
     avian: false,
@@ -53,5 +58,6 @@ export const animals = {
     feline: false,
     name: 'underfinedType',
     uid: 'felin_uid',
+    checked: false,
   },
 };
