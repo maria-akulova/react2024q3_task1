@@ -14,6 +14,8 @@ import style from './Animals.module.scss';
 import { useSearchQuery } from 'hooks/useSearchQuery';
 import { restrictNumberAnimals } from 'src/utils/HelperString';
 import { useThemeContext } from 'src/hooks/useThemeContext';
+import { useSelector } from 'react-redux';
+import { selectCount } from 'src/features/counter/counterSlice';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -28,6 +30,7 @@ export const Animals: React.FC = () => {
   const [searchTerm, setSearchTerm] = useSearchQuery();
   const [activeAnimalId, setActiveAnimalId] = useState<string | null>(null);
   const { theme } = useThemeContext();
+  const count = useSelector(selectCount);
 
   useEffect(() => {
     getAnimals(searchTerm, currentPage);
@@ -114,6 +117,15 @@ export const Animals: React.FC = () => {
               totalPages={totalPages}
               onPageChange={handlePageChange}
             />
+          )}
+        </div>
+        <div>
+          {count > 0 && !loading && (
+            <div className={style.flyout}>
+              <p>
+                {count} item{count === 1 ? '' : 's'} {count === 1 ? 'is' : 'are'} selected
+              </p>
+            </div>
           )}
         </div>
       </div>

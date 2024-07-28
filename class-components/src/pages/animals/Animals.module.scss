@@ -37,3 +37,16 @@
   background-color: darkblue;
   color: white;
 }
+
+.flyout {
+  position: fixed;
+  bottom: 0;
+  min-width: 768px;
+  background-color: grey;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  font-size: 2rem;
+  border-radius: 10px;
+  color: white;
+}
