@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import {
   Animal,
-  AnimalListRedux,
   InputSearch,
   Pagination,
   ResultSearch,
@@ -12,8 +11,11 @@ import {
 import api from 'src/services/api';
 import style from './Animals.module.scss';
 import { useSearchQuery } from 'hooks/useSearchQuery';
-import { restrictNumberAnimals } from 'src/utils/HelperString';
+import { convertToCSV, restrictNumberAnimals } from 'src/utils/HelperString';
 import { useThemeContext } from 'src/hooks/useThemeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { cleanCounter, selectCount } from 'src/features/counter/counterSlice';
+import { allAnimals, cleanAnimals } from 'src/features/animals/animalSlice';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -28,6 +30,10 @@ export const Animals: React.FC = () => {
   const [searchTerm, setSearchTerm] = useSearchQuery();
   const [activeAnimalId, setActiveAnimalId] = useState<string | null>(null);
   const { theme } = useThemeContext();
+  const count = useSelector(selectCount);
+  const dispatch = useDispatch();
+  const allAnimalsFromStore = useSelector(allAnimals);
+  const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
 
   useEffect(() => {
     getAnimals(searchTerm, currentPage);
@@ -45,6 +51,28 @@ export const Animals: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCleanAll = () => {
+    dispatch(cleanCounter());
+    dispatch(cleanAnimals());
+  };
+
+  const downloadCSV = (data: Animal[]) => {
+    const csv = convertToCSV(data);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+
+    if (downloadLinkRef.current) {
+      downloadLinkRef.current.href = url;
+      downloadLinkRef.current.setAttribute('download', `${count}_animals.csv`);
+      downloadLinkRef.current.click();
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  const handleDownload = () => {
+    downloadCSV(allAnimalsFromStore);
   };
 
   const handleAnimalClick = (animalId: string) => {
@@ -82,13 +110,6 @@ export const Animals: React.FC = () => {
             {loading ? (
               <Spinner />
             ) : (
-              <AnimalListRedux onItemClick={handleAnimalClick} activeAnimalId={activeAnimalId} />
-            )}
-          </div>
-          <div className={style.left_section} onClick={handleCloseDetails}>
-            {loading ? (
-              <Spinner />
-            ) : (
               <ResultSearch
                 animals={animals}
                 onItemClick={handleAnimalClick}
@@ -114,6 +135,20 @@ export const Animals: React.FC = () => {
               totalPages={totalPages}
               onPageChange={handlePageChange}
             />
+          )}
+        </div>
+        <div>
+          {count > 0 && !loading && (
+            <div className={`${style.flyout} ${style[theme]}`}>
+              <p>
+                {count} item{count === 1 ? '' : 's'} {count === 1 ? 'is' : 'are'} selected
+              </p>
+              <button onClick={handleCleanAll}>Unselect all</button>
+              <button onClick={handleDownload}>Download</button>
+              <a ref={downloadLinkRef} style={{ display: 'none' }}>
+                Download
+              </a>
+            </div>
           )}
         </div>
       </div>
