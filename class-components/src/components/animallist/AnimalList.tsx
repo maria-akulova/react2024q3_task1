@@ -2,8 +2,8 @@ import React from 'react';
 import style from './AnimalList.module.scss';
 import { Animal } from 'components/index';
 import { useThemeContext } from 'src/hooks/useThemeContext';
-import { useDispatch } from 'react-redux';
-import { animalAdded, animalRemove } from 'src/features/animals/animalSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { allAnimals, animalAdded, animalRemove } from 'src/features/animals/animalSlice';
 import { decrement, increment } from 'src/features/counter/counterSlice';
 
 interface ResultSearchProps {
@@ -19,6 +19,7 @@ export const ResultSearch: React.FC<ResultSearchProps> = ({
 }) => {
   const { theme } = useThemeContext();
   const dispatch = useDispatch();
+  const allAnimalsFromStore = useSelector(allAnimals);
 
   const handleCheckboxChange = (animal: Animal) => {
     if (animal.checked) {
@@ -48,6 +49,9 @@ export const ResultSearch: React.FC<ResultSearchProps> = ({
                     animal.checked = !animal.checked;
                     handleCheckboxChange(animal);
                   }}
+                  checked={
+                    !!allAnimalsFromStore.find((animalStore) => animalStore.uid === animal.uid)
+                  }
                 />
                 <div
                   key={animal.uid}
