@@ -4,6 +4,7 @@ import { Spinner } from './spinner/Spinner';
 import ErrorBoundary from './errorboundary/ErrorBoundary';
 import { AnimalDetails } from './details/AnimalDetails';
 import { Pagination } from './pagination/Pagination';
+import { Flyout } from './flyout/Flyout';
 
 interface Animal {
   avian: boolean;
@@ -38,5 +39,6 @@ export {
   ErrorBoundary,
   AnimalDetails,
   Pagination,
+  Flyout,
 };
 export type { Animal };
