@@ -5,7 +5,7 @@ import { useThemeContext } from 'src/hooks/useThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { animalAdded, animalRemove } from 'src/features/animals/animalSlice';
 import { decrement, increment } from 'src/features/counter/counterSlice';
-import store from 'src/store';
+import { store } from 'src/store';
 
 interface ResultSearchProps {
   animals: Animal[];

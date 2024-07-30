@@ -4,7 +4,7 @@ import { MemoryRouter, MemoryRouterProps } from 'react-router-dom';
 import { ReactElement, ReactNode } from 'react';
 import { Header } from 'src/components/header/Header';
 import { Provider } from 'react-redux';
-import store from 'src/store';
+import { store } from 'src/store';
 
 interface IExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   initialEntries?: MemoryRouterProps['initialEntries'];

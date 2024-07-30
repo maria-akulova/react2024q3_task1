@@ -16,7 +16,9 @@ interface Animal {
   uid: string;
   checked?: boolean;
 }
-
+interface AnimalResponse {
+  animal: Animal;
+}
 interface Page {
   pageNumber: number;
   pageSize: number;
@@ -27,7 +29,7 @@ interface Page {
   lastPage: boolean;
 }
 
-export interface SearchResult {
+interface SearchResult {
   page: Page;
   animals: Animal[];
 }
@@ -41,4 +43,4 @@ export {
   Pagination,
   Flyout,
 };
-export type { Animal };
+export type { Animal, AnimalResponse, SearchResult };
