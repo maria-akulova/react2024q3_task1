@@ -137,20 +137,19 @@ export const Animals: React.FC = () => {
             />
           )}
         </div>
-        <div>
-          {count > 0 && !loading && (
-            <div className={`${style.flyout} ${style[theme]}`}>
-              <p>
-                {count} item{count === 1 ? '' : 's'} {count === 1 ? 'is' : 'are'} selected
-              </p>
-              <button onClick={handleCleanAll}>Unselect all</button>
-              <button onClick={handleDownload}>Download</button>
-              <a ref={downloadLinkRef} style={{ display: 'none' }}>
-                DownloadLink
-              </a>
-            </div>
-          )}
-        </div>
+
+        {count > 0 && !loading && (
+          <div className={`${style.flyout} ${style[theme]}`}>
+            <p>
+              {count} item{count === 1 ? '' : 's'} {count === 1 ? 'is' : 'are'} selected
+            </p>
+            <button onClick={handleCleanAll}>Unselect all</button>
+            <button onClick={handleDownload}>Download</button>
+            <a ref={downloadLinkRef} style={{ display: 'none' }}>
+              DownloadLink
+            </a>
+          </div>
+        )}
       </div>
     </>
   );

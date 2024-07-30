@@ -32,39 +32,37 @@ export const AnimalList: React.FC<ResultSearchProps> = ({
     }
   };
 
+  const animalsListItmes = animals.map((animal) => (
+    <li key={animal.uid} className={style.animal_items}>
+      <input
+        type="checkbox"
+        className={style.checkbox}
+        onChange={() => {
+          animal.checked = !animal.checked;
+          handleCheckboxChange(animal);
+        }}
+        checked={!!allAnimalsFromStore.find((animalStore) => animalStore.uid === animal.uid)}
+      />
+      <div
+        key={animal.uid || 'defaultkey'}
+        className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''} ${style[theme]}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          onItemClick(animal.uid);
+        }}
+      >
+        <p>{animal.name}</p>
+      </div>
+    </li>
+  ));
+
   return (
     <>
       <section className={style.section}>
         {animals.length === 0 && (
           <div className={style.noResults}>No results. Try another name.</div>
         )}
-        <ul>
-          {animals.map((animal) => (
-            <li key={animal.uid} className={style.animal_items}>
-              <input
-                type="checkbox"
-                className={style.checkbox}
-                onChange={() => {
-                  animal.checked = !animal.checked;
-                  handleCheckboxChange(animal);
-                }}
-                checked={
-                  !!allAnimalsFromStore.find((animalStore) => animalStore.uid === animal.uid)
-                }
-              />
-              <div
-                key={animal.uid || 'defaultkey'}
-                className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''} ${style[theme]}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onItemClick(animal.uid);
-                }}
-              >
-                <p>{animal.name}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ul>{animalsListItmes}</ul>
       </section>
     </>
   );
