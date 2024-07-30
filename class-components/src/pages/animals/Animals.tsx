@@ -146,7 +146,7 @@ export const Animals: React.FC = () => {
               <button onClick={handleCleanAll}>Unselect all</button>
               <button onClick={handleDownload}>Download</button>
               <a ref={downloadLinkRef} style={{ display: 'none' }}>
-                Download
+                DownloadLink
               </a>
             </div>
           )}
