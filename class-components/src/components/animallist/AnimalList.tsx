@@ -12,7 +12,7 @@ interface ResultSearchProps {
   activeAnimalId: string | null;
 }
 
-export const ResultSearch: React.FC<ResultSearchProps> = ({
+export const AnimalList: React.FC<ResultSearchProps> = ({
   animals,
   onItemClick,
   activeAnimalId,
@@ -38,35 +38,33 @@ export const ResultSearch: React.FC<ResultSearchProps> = ({
         {animals.length === 0 && (
           <div className={style.noResults}>No results. Try another name.</div>
         )}
-        <div>
+        <ul>
           {animals.map((animal) => (
-            <>
-              <div className={style.animal_items}>
-                <input
-                  type="checkbox"
-                  className={style.checkbox}
-                  onChange={() => {
-                    animal.checked = !animal.checked;
-                    handleCheckboxChange(animal);
-                  }}
-                  checked={
-                    !!allAnimalsFromStore.find((animalStore) => animalStore.uid === animal.uid)
-                  }
-                />
-                <div
-                  key={animal.uid}
-                  className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''} ${style[theme]}`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onItemClick(animal.uid);
-                  }}
-                >
-                  <p>{animal.name}</p>
-                </div>
+            <li key={animal.uid} className={style.animal_items}>
+              <input
+                type="checkbox"
+                className={style.checkbox}
+                onChange={() => {
+                  animal.checked = !animal.checked;
+                  handleCheckboxChange(animal);
+                }}
+                checked={
+                  !!allAnimalsFromStore.find((animalStore) => animalStore.uid === animal.uid)
+                }
+              />
+              <div
+                key={animal.uid || 'defaultkey'}
+                className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''} ${style[theme]}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onItemClick(animal.uid);
+                }}
+              >
+                <p>{animal.name}</p>
               </div>
-            </>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
     </>
   );
