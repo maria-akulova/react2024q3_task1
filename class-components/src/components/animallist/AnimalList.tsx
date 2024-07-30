@@ -3,8 +3,9 @@ import style from './AnimalList.module.scss';
 import { Animal } from 'components/index';
 import { useThemeContext } from 'src/hooks/useThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { allAnimals, animalAdded, animalRemove } from 'src/features/animals/animalSlice';
+import { animalAdded, animalRemove } from 'src/features/animals/animalSlice';
 import { decrement, increment } from 'src/features/counter/counterSlice';
+import store from 'src/store';
 
 interface ResultSearchProps {
   animals: Animal[];
@@ -19,7 +20,13 @@ export const AnimalList: React.FC<ResultSearchProps> = ({
 }) => {
   const { theme } = useThemeContext();
   const dispatch = useDispatch();
-  const allAnimalsFromStore = useSelector(allAnimals);
+  /**
+   * As alternative you can apply direct selector from animal slicer
+   * const allAnimalsFromStore = useSelector(allAnimals);
+   * Example below alopted for type script from React-redux tutorial
+   * https://redux.js.org/tutorials/essentials/part-3-data-flow
+   */
+  const animalsStore = useSelector((state: ReturnType<typeof store.getState>) => state.animals);
 
   const handleCheckboxChange = (animal: Animal) => {
     if (animal.checked) {
@@ -41,7 +48,7 @@ export const AnimalList: React.FC<ResultSearchProps> = ({
           animal.checked = !animal.checked;
           handleCheckboxChange(animal);
         }}
-        checked={!!allAnimalsFromStore.find((animalStore) => animalStore.uid === animal.uid)}
+        checked={!!animalsStore.find((animalStore) => animalStore.uid === animal.uid)}
       />
       <div
         key={animal.uid || 'defaultkey'}
