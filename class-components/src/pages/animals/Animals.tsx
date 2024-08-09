@@ -6,8 +6,9 @@ import { restrictNumberAnimals } from 'src/utils/HelperString';
 import { useThemeContext } from 'src/hooks/useThemeContext';
 import { useGetAnimalsByPageMutation } from 'src/features/api/AnimalAPI';
 import style from './Animals.module.scss';
-import { useDispatch } from 'react-redux';
-import { addAllAnimals } from 'src/features/page/pageSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAllAnimals, selectPage } from 'src/features/page/pageSlice';
+import { store } from 'src/store';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -24,25 +25,33 @@ export const Animals: React.FC = () => {
   const [getAnimals, { data, error, isLoading }] = useGetAnimalsByPageMutation();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await getAnimals({
-        searchTerm,
-        itemsPerPage: ITEMS_PER_PAGE,
+  const fetchData = async () => {
+    const response = await getAnimals({
+      searchTerm,
+      itemsPerPage: ITEMS_PER_PAGE,
+      page: currentPage,
+    });
+
+    setAnimals(response.data?.animals.map((animal) => ({ ...animal, checked: false })) ?? []);
+    setTotalPages(restrictNumberAnimals(response.data?.page.totalPages ?? 1));
+    dispatch(
+      addAllAnimals({
         page: currentPage,
-      });
+        animals: response.data?.animals.map((animal) => ({ ...animal, checked: false })) ?? [],
+      }),
+    );
+  };
 
-      setAnimals(response.data?.animals.map((animal) => ({ ...animal, checked: false })) ?? []);
-      setTotalPages(restrictNumberAnimals(response.data?.page.totalPages ?? 1));
-      dispatch(
-        addAllAnimals({
-          page: currentPage,
-          animals: response.data?.animals.map((animal) => ({ ...animal, checked: false })) ?? [],
-        }),
-      );
-    };
+  const alreadyVisitedPageAnimals = useSelector((state: ReturnType<typeof store.getState>) =>
+    selectPage(state, currentPage),
+  );
 
-    fetchData();
+  useEffect(() => {
+    if (alreadyVisitedPageAnimals.length > 0) {
+      setAnimals(alreadyVisitedPageAnimals);
+    } else {
+      fetchData();
+    }
   }, [searchTerm, currentPage, dispatch]);
 
   if (isLoading) return <Spinner />;

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Animal } from 'src/components';
 
-interface PageProps {
+export interface PageProps {
   page: number;
   animals: Animal[];
 }
