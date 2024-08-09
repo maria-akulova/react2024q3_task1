@@ -32,7 +32,7 @@ describe('Smoke Test: run app', () => {
   test('User can open PDP', async () => {
     customRender(<TestComponent />, { initialEntries });
 
-    const usernameInput = await screen.getByRole('textbox');
+    const usernameInput = await screen.findByRole('textbox');
     expect(usernameInput).toBeInTheDocument();
     await fireEvent.change(usernameInput, { target: { value: 'sa' } });
     logDOM(usernameInput);
