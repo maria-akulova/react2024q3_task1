@@ -57,7 +57,7 @@ export const animals = {
     earthInsect: false,
     feline: false,
     name: 'underfinedType',
-    uid: 'felin_uid',
+    uid: 'underfined_uid',
     checked: false,
   },
 };

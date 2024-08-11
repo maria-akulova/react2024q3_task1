@@ -9,6 +9,7 @@ import { store } from 'src/store';
 interface IExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   initialEntries?: MemoryRouterProps['initialEntries'];
   theme?: ThemeContextType;
+  store?: unknown;
 }
 
 export const customRender = (ui: ReactElement, options?: IExtendedRenderOptions): RenderResult => {
@@ -30,8 +31,5 @@ export const customRender = (ui: ReactElement, options?: IExtendedRenderOptions)
 
   return render(ui, { wrapper: Wrapper, ...options });
 };
-
-// eslint-disable-next-line react-refresh/only-export-components
-export * from '@testing-library/react';
 
 export { customRender as render };
