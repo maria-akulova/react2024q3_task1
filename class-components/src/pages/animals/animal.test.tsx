@@ -74,4 +74,19 @@ describe('Smoke Test: run app', () => {
     expect(await screen.findByText('1 item is selected')).toBeInTheDocument();
     expect(screen.queryByText('1 item is selected')).not.toBeInTheDocument();
   });
+
+  test('User can work with flyout', async () => {
+    customRender(<TestComponent />, { initialEntries });
+
+    const allCheckboxes = await screen.findAllByRole('checkbox');
+    const firstCheckbox = allCheckboxes[0];
+    const secondCheckbox = allCheckboxes[1];
+
+    userEvent.click(firstCheckbox);
+    userEvent.click(secondCheckbox);
+    expect(await screen.queryByText('2 items are selected')).toBeInTheDocument();
+
+    userEvent.click(await screen.findByText('Download'));
+    userEvent.click(await screen.findByText('Unselect all'));
+  });
 });
