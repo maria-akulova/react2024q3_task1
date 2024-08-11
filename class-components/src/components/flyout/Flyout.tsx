@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { cleanCounter, selectCount } from 'src/features/counter/counterSlice';
 import { useThemeContext } from 'src/hooks/useThemeContext';
 import { allAnimals, cleanAnimals } from 'src/features/animals/animalSlice';
-import { convertToCSV } from 'src/utils/HelperString';
+import { downloadCSV } from 'src/utils/HelperString';
 import { Animal } from '..';
 import { useRef } from 'react';
 import style from './Flyout.module.scss';
@@ -22,24 +22,11 @@ export const Flyout: React.FC<FlyoutProps> = ({ animals }) => {
   const handleCleanAll = () => {
     dispatch(cleanCounter());
     dispatch(cleanAnimals());
-    animals.map((animal) => (animal.checked = false));
-  };
-
-  const downloadCSV = (data: Animal[]) => {
-    const csv = convertToCSV(data);
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-
-    if (downloadLinkRef.current) {
-      downloadLinkRef.current.href = url;
-      downloadLinkRef.current.setAttribute('download', `${count}_animals.csv`);
-      downloadLinkRef.current.click();
-      URL.revokeObjectURL(url);
-    }
+    animals.map((animal) => ({ ...animal, checked: false }));
   };
 
   const handleDownload = () => {
-    downloadCSV(allAnimalsFromStore);
+    downloadCSV(allAnimalsFromStore, downloadLinkRef);
   };
 
   return (

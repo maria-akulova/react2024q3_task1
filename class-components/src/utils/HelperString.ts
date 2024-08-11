@@ -1,4 +1,5 @@
 import { Animal } from 'components/index';
+import { MutableRefObject } from 'react';
 
 export const trunc = (text: string): string => {
   return text.trim();
@@ -23,4 +24,20 @@ export const convertToCSV = (data: Animal[]): string => {
     header.map((fieldName) => JSON.stringify(item[fieldName as keyof Animal])).join(','),
   );
   return [header.join(','), ...rows].join('\n');
+};
+
+export const downloadCSV = (
+  data: Animal[],
+  downloadLinkRef: MutableRefObject<HTMLAnchorElement | null>,
+) => {
+  const csv = convertToCSV(data);
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
+  if (downloadLinkRef.current) {
+    downloadLinkRef.current.href = url;
+    downloadLinkRef.current.setAttribute('download', `${data.length}_animals.csv`);
+    downloadLinkRef.current.click();
+    URL.revokeObjectURL(url);
+  }
 };

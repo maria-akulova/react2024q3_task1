@@ -5,7 +5,7 @@ import { useThemeContext } from 'src/hooks/useThemeContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { animalAdded, animalRemove } from 'src/features/animals/animalSlice';
 import { decrement, increment } from 'src/features/counter/counterSlice';
-import store from 'src/store';
+import { store } from 'src/store';
 
 interface ResultSearchProps {
   animals: Animal[];
@@ -23,13 +23,13 @@ export const AnimalList: React.FC<ResultSearchProps> = ({
   /**
    * As alternative you can apply direct selector from animal slicer
    * const allAnimalsFromStore = useSelector(allAnimals);
-   * Example below alopted for type script from React-redux tutorial
+   * Example below adopted for type script from React-redux tutorial
    * https://redux.js.org/tutorials/essentials/part-3-data-flow
    */
   const animalsStore = useSelector((state: ReturnType<typeof store.getState>) => state.animals);
 
-  const handleCheckboxChange = (animal: Animal) => {
-    if (animal.checked) {
+  const handleCheckboxChange = (animal: Animal, status: boolean) => {
+    if (status) {
       dispatch(increment());
       const animalNew = { id: animal.uid, ...animal };
       dispatch(animalAdded(animalNew));
@@ -38,30 +38,38 @@ export const AnimalList: React.FC<ResultSearchProps> = ({
       dispatch(animalRemove(animal.uid));
     }
   };
+  const isAnimalSelected = (animalUid: string) =>
+    !!animalsStore.find((animalStore) => animalStore.uid === animalUid);
 
-  const animalsListItmes = animals.map((animal) => (
-    <li key={animal.uid} className={style.animal_items}>
-      <input
-        type="checkbox"
-        className={style.checkbox}
-        onChange={() => {
-          animal.checked = !animal.checked;
-          handleCheckboxChange(animal);
-        }}
-        checked={!!animalsStore.find((animalStore) => animalStore.uid === animal.uid)}
-      />
-      <div
-        key={animal.uid || 'defaultkey'}
-        className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''} ${style[theme]}`}
-        onClick={(e) => {
-          e.stopPropagation();
-          onItemClick(animal.uid);
-        }}
-      >
-        <p>{animal.name}</p>
-      </div>
-    </li>
-  ));
+  const handleCheckboxToggle = (animal: Animal) => {
+    const isSelected = !isAnimalSelected(animal.uid);
+    handleCheckboxChange(animal, isSelected);
+  };
+
+  const animalsListItems = animals.map((animal) => {
+    const isSelected = isAnimalSelected(animal.uid);
+
+    return (
+      <li key={animal.uid} className={style.animal_items}>
+        <input
+          type="checkbox"
+          className={style.checkbox}
+          onChange={() => handleCheckboxToggle(animal)}
+          checked={isSelected}
+        />
+        <div
+          key={animal.uid || 'defaultkey'}
+          className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''} ${style[theme]}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onItemClick(animal.uid);
+          }}
+        >
+          <p>{animal.name}</p>
+        </div>
+      </li>
+    );
+  });
 
   return (
     <>
@@ -69,7 +77,7 @@ export const AnimalList: React.FC<ResultSearchProps> = ({
         {animals.length === 0 && (
           <div className={style.noResults}>No results. Try another name.</div>
         )}
-        <ul>{animalsListItmes}</ul>
+        <ul>{animalsListItems}</ul>
       </section>
     </>
   );

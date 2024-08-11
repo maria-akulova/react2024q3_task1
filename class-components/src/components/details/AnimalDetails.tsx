@@ -1,49 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import api from 'src/services/api';
-import { Animal, Spinner } from 'components/index';
+//import api from 'src/services/api';
+import { Spinner } from 'components/index';
 import { getAnimalType } from 'utils/HelperString';
 import style from './AnimalDetails.module.scss';
 import { useThemeContext } from 'src/hooks/useThemeContext';
+import { useGetAnimalByIDQuery } from 'src/features/api/AnimalAPI';
 
 export const AnimalDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [animal, setAnimal] = useState<Animal | null>(null);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { theme } = useThemeContext();
+  const { data, error, isLoading } = useGetAnimalByIDQuery(id ?? '');
 
-  useEffect(() => {
-    if (id) {
-      fetchAnimalDetails(id);
-    }
-  }, [id]);
+  const animalDetails = data?.animal;
 
-  const fetchAnimalDetails = async (animalId: string) => {
-    setLoading(true);
-    try {
-      const res = await api.getAnimalDetails(animalId);
-      setAnimal(res.animal);
-    } catch (err) {
-      console.error('Failed to fetch animal details', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (isLoading) return <Spinner />;
+  if (error) throw new Error('Failed to fetch animal details');
 
-  if (loading) {
-    return <Spinner />;
-  }
-
-  if (!animal) {
+  if (!data) {
     return <p>No animal details available.</p>;
   }
 
   return (
     <div onClick={(e) => e.stopPropagation()}>
-      <h2>{animal.name}</h2>
-      <p>Unique number: {animal.uid}</p>
-      <p>The Type is {getAnimalType(animal)}</p>
+      <h2>{animalDetails?.name}</h2>
+      <p>Unique number: {animalDetails?.uid}</p>
+      <p>The Type is {getAnimalType(data.animal)}</p>
       <button
         className={`${style.close_button} ${style[theme]}`}
         onClick={() => navigate(`/page/${window.location.pathname.split('/')[2]}`)}

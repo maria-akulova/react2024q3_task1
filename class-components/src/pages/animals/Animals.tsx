@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
-import {
-  Animal,
-  InputSearch,
-  Pagination,
-  ResultSearch,
-  SearchResult,
-  Spinner,
-  Flyout,
-} from 'components/index';
-import api from 'src/services/api';
-import style from './Animals.module.scss';
+import { Animal, InputSearch, Pagination, ResultSearch, Spinner, Flyout } from 'components/index';
 import { useSearchQuery } from 'hooks/useSearchQuery';
 import { restrictNumberAnimals } from 'src/utils/HelperString';
 import { useThemeContext } from 'src/hooks/useThemeContext';
+import { useGetAnimalsByPageMutation } from 'src/features/api/AnimalAPI';
+import style from './Animals.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { addAllAnimals, selectPage } from 'src/features/page/pageSlice';
+import { store } from 'src/store';
 
 const ITEMS_PER_PAGE = 5;
 
 export const Animals: React.FC = () => {
-  const [animals, setAnimals] = useState<Animal[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,24 +20,46 @@ export const Animals: React.FC = () => {
   const [searchTerm, setSearchTerm] = useSearchQuery();
   const [activeAnimalId, setActiveAnimalId] = useState<string | null>(null);
   const { theme } = useThemeContext();
+  const [animals, setAnimals] = useState<Animal[]>([]);
+
+  const [getAnimals, { data, error, isLoading }] = useGetAnimalsByPageMutation();
+  const dispatch = useDispatch();
+
+  const fetchData = async () => {
+    const response = await getAnimals({
+      searchTerm,
+      itemsPerPage: ITEMS_PER_PAGE,
+      page: currentPage,
+    });
+
+    setAnimals(response.data?.animals.map((animal) => ({ ...animal, checked: false })) ?? []);
+    setTotalPages(restrictNumberAnimals(response.data?.page.totalPages ?? 1));
+    dispatch(
+      addAllAnimals({
+        page: currentPage,
+        animals: response.data?.animals.map((animal) => ({ ...animal, checked: false })) ?? [],
+      }),
+    );
+  };
+
+  const alreadyVisitedPageAnimals = useSelector((state: ReturnType<typeof store.getState>) =>
+    selectPage(state, currentPage),
+  );
 
   useEffect(() => {
-    getAnimals(searchTerm, currentPage);
-  }, [searchTerm, currentPage]);
-
-  const getAnimals = async (searchTerm: string, page: number) => {
-    setLoading(true);
-    try {
-      const res = (await api.getAnimals(searchTerm, ITEMS_PER_PAGE, page)) as SearchResult;
-      setAnimals(res.animals);
-      setTotalPages(restrictNumberAnimals(res.page.totalPages));
-    } catch (err) {
-      console.error('Failed to fetch animals', err);
-      setError(true);
-    } finally {
-      setLoading(false);
+    if (alreadyVisitedPageAnimals.length > 0) {
+      setAnimals(alreadyVisitedPageAnimals);
+    } else {
+      fetchData();
     }
-  };
+  }, [searchTerm, currentPage, dispatch]);
+
+  if (isLoading) return <Spinner />;
+  if (error) throw new Error('Failed to fetch animals');
+
+  if (!data) {
+    return <p>No animal details available.</p>;
+  }
 
   const handleAnimalClick = (animalId: string) => {
     setActiveAnimalId(animalId);
@@ -63,10 +77,6 @@ export const Animals: React.FC = () => {
     navigate(`/page/${newPage}`);
   };
 
-  if (error) {
-    throw new Error('Test Error');
-  }
-
   return (
     <>
       <InputSearch
@@ -79,7 +89,7 @@ export const Animals: React.FC = () => {
       <div className={style.search_result}>
         <div className={style.container}>
           <div className={style.left_section} onClick={handleCloseDetails}>
-            {loading ? (
+            {isLoading ? (
               <Spinner />
             ) : (
               <ResultSearch
@@ -101,7 +111,7 @@ export const Animals: React.FC = () => {
           </div>
         </div>
         <div>
-          {totalPages > 1 && !loading && (
+          {totalPages > 1 && !isLoading && (
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}
@@ -109,7 +119,7 @@ export const Animals: React.FC = () => {
             />
           )}
         </div>
-        {!loading && <Flyout animals={animals} />}
+        {!isLoading && <Flyout animals={animals} />}
       </div>
     </>
   );
