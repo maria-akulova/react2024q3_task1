@@ -1,0 +1,4 @@
+cd forms
+npm run format:fix
+git add .
+npx lint-staged
