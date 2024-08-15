@@ -7,8 +7,6 @@ git checkout main
 
 git checkout -b forms
 
-
-
 # Create project
 `npm create vite@latest class-components -- --template react-ts`
 
@@ -49,3 +47,6 @@ git checkout -b forms
 
 # React Router
 `npm install react-router-dom`
+
+# Default eslint config
+`Delete default config, only eslint.config.mjs should be in the project. Otherwise the formatters won't work at all.`
