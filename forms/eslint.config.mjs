@@ -78,14 +78,12 @@ export default [
       'react/no-children-prop': 'off',
       'react-compiler/react-compiler': 'error',
       'react/react-in-jsx-scope': 'off',
-
       'react-refresh/only-export-components': [
         'warn',
         {
           allowConstantExport: true,
         },
       ],
-
       'react/jsx-uses-react': 'error',
       'react/jsx-uses-vars': 'error',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
