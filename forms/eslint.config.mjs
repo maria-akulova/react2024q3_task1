@@ -73,7 +73,13 @@ export default [
       'no-console': 'off',
       'no-undef': 'off',
       'no-unused-vars': 'off',
-      'prettier/prettier': 'error',
+      'prettier/prettier': [
+        'error',
+        {
+          singleQuote: true,
+          parser: 'flow',
+        },
+      ],
       'react/display-name': 'off',
       'react/no-children-prop': 'off',
       'react-compiler/react-compiler': 'error',

@@ -11,7 +11,7 @@
     "paths": {
       "src/*": ["./src/*"],
       "components/*": ["./src/components/*"],
-      "features/*": ["./src/features/*"],
+      "store/*": ["./src/store/*"],
       "hooks/*": ["./src/hooks/*"],
       "pages/*": ["./src/pages/*"],
       "utils/*": ["./src/utils/*"]
