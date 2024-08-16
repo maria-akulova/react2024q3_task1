@@ -3,31 +3,20 @@ import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { FormValues } from 'src/components';
 
 export interface FormState {
-  uncontrolledFormData: FormValues[];
-  controlledFormData: FormValues[];
+  formData: FormValues[];
 }
 
 export const initialState: FormState = {
-  uncontrolledFormData: [],
-  controlledFormData: [],
+  formData: [],
 };
 
 const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    setUncontrolledFormData: {
+    setFormData: {
       reducer: (state, action: PayloadAction<FormValues>) => {
-        state.uncontrolledFormData.push(action.payload);
-      },
-      prepare: (data: FormValues) => {
-        const id = nanoid();
-        return { payload: { id, ...data } };
-      },
-    },
-    setControlledFormData: {
-      reducer: (state, action: PayloadAction<FormValues>) => {
-        state.controlledFormData.push(action.payload);
+        state.formData.unshift(action.payload);
       },
       prepare: (data: FormValues) => {
         const id = nanoid();
@@ -37,6 +26,6 @@ const formSlice = createSlice({
   },
 });
 
-export const { setUncontrolledFormData, setControlledFormData } = formSlice.actions;
+export const { setFormData } = formSlice.actions;
 
 export default formSlice.reducer;

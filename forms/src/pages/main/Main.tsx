@@ -6,8 +6,7 @@ import style from './Main.module.scss';
 import { FormValues, Header } from 'src/components';
 
 const Main: React.FC = () => {
-  const uncontrolledData = useSelector((state: RootState) => state.form.uncontrolledFormData);
-  const controlledData = useSelector((state: RootState) => state.form.controlledFormData);
+  const formData = useSelector((state: RootState) => state.form.formData);
 
   const dataList = (source: FormValues[]) =>
     source.map((data) => {
@@ -22,32 +21,16 @@ const Main: React.FC = () => {
       );
     });
 
-  const form = (uncontrolledData: FormValues[]) => {
+  const form = (source: FormValues[]) => {
     return (
-      <div>
-        {uncontrolledData.length > 0 ? (
-          <ul>{dataList(uncontrolledData)}</ul>
-        ) : (
-          <p>No data submitted yet.</p>
-        )}
-      </div>
+      <div>{source.length > 0 ? <ul>{dataList(source)}</ul> : <p>No data submitted yet.</p>}</div>
     );
   };
 
   return (
     <div>
       <Header />
-      <div>
-        <h2>Form Data</h2>
-        <div>
-          <h3>Uncontrolled Form Data:</h3>
-          {form(uncontrolledData)}
-        </div>
-        <div>
-          <h3>Controlled Form Data:</h3>
-          {form(controlledData)}
-        </div>
-      </div>
+      <div>{form(formData)}</div>
     </div>
   );
 };

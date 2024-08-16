@@ -1,9 +1,8 @@
-// src/components/ControlledForm.tsx
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
-import { setControlledFormData } from 'src/store/formSlice';
+import { setFormData } from 'src/store/formSlice';
 import { useNavigate } from 'react-router-dom';
 import { validationSchema } from 'src/utils/validation';
 import { FormValues } from '..';
@@ -15,18 +14,18 @@ export const ControlledForm: React.FC = () => {
     formState: { errors, isValid },
   } = useForm<FormValues>({
     resolver: yupResolver(validationSchema),
-    mode: 'onChange', // Live validation
+    mode: 'onChange',
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    dispatch(setControlledFormData(data));
+    dispatch(setFormData(data));
     navigate('/');
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
       <div>
         <label>
           Name:
@@ -41,9 +40,7 @@ export const ControlledForm: React.FC = () => {
         </label>
         {errors.age && <p className="error">{errors.age.message}</p>}
       </div>
-      <button type="submit" disabled={!isValid}>
-        Submit
-      </button>
+      <input type="submit" disabled={!isValid} />
     </form>
   );
 };

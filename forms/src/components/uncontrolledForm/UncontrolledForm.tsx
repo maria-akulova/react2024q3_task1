@@ -2,10 +2,10 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setUncontrolledFormData } from 'src/store/formSlice';
+import { setFormData } from 'src/store/formSlice';
 import { validationSchema } from 'utils/validation';
-import { FormValues } from '..';
-interface ErrorValidation {
+import { EmptyFormValues, FormErrors, FormValues } from 'components/index';
+interface IErrorValidation {
   inner: {
     path: string,
     message: string,
@@ -15,9 +15,11 @@ interface ErrorValidation {
 export const UncontrolledForm: React.FC = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [errors, setErrors] = useState<{ name?: string, age?: string }>({});
+
+  const [errors, setErrors] = useState<FormErrors>();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,36 +31,36 @@ export const UncontrolledForm: React.FC = () => {
 
     try {
       await validationSchema.validate(formData, { abortEarly: false });
-      setErrors({});
-      dispatch(setUncontrolledFormData(formData));
+      setErrors(EmptyFormValues);
+      dispatch(setFormData(formData));
       navigate('/');
     } catch (validationErrors: unknown) {
-      const errorMessages: { name?: string, age?: string } = {};
-      const validationErrors1 = validationErrors as ErrorValidation;
-      validationErrors1.inner.forEach((error: { path: string, message: string }) => {
-        errorMessages[error.path as keyof typeof errorMessages] = error.message;
+      const errorMessages: FormErrors = EmptyFormValues;
+      const errors = validationErrors as IErrorValidation;
+      errors.inner.forEach((error: { path: string, message: string }) => {
+        errorMessages[error.path] = error.message;
       });
       setErrors(errorMessages);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} autoComplete="on">
       <div>
         <label>
           Name:
           <input type="text" ref={nameRef} />
         </label>
-        {errors.name && <p className="error">{errors.name}</p>}
+        {errors?.name && <p className="error">{errors.name}</p>}
       </div>
       <div>
         <label>
           Age:
           <input type="number" ref={ageRef} />
         </label>
-        {errors.age && <p className="error">{errors.age}</p>}
+        {errors?.age && <p className="error">{errors.age}</p>}
       </div>
-      <button type="submit">Submit</button>
+      <input type="submit" />
     </form>
   );
 };

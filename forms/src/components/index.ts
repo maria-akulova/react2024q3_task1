@@ -8,5 +8,14 @@ interface FormValues {
   age: number;
 }
 
-export { ErrorBoundary, Header, ControlledForm, UncontrolledForm };
-export type { FormValues };
+interface FormErrors {
+  [key: string]: string | number;
+}
+
+const EmptyFormValues = {
+  name: '',
+  age: 0,
+};
+
+export { ErrorBoundary, Header, ControlledForm, UncontrolledForm, EmptyFormValues };
+export type { FormValues, FormErrors };
