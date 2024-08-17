@@ -1,10 +1,14 @@
 import React from 'react';
 import { UncontrolledForm } from 'components/uncontrolledForm/UncontrolledForm';
+import { Link } from 'react-router-dom';
 
 const UncontrolledFormPage: React.FC = () => {
   return (
     <div>
-      <h1>Uncontrolled Form</h1>
+      <div className="header">
+        <h1>Uncontrolled Form</h1>
+        <Link to="/">Main Form</Link>
+      </div>{' '}
       <UncontrolledForm />
     </div>
   );
