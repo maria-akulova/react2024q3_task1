@@ -7,6 +7,7 @@ import {
   EmptyFormValues,
   FormErrors,
   FormValues,
+  InputCheckboxU,
   InputNumberU,
   InputRadioU,
   InputTextU,
@@ -21,6 +22,7 @@ export const UncontrolledForm: React.FC = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const maleRef = useRef<HTMLInputElement>(null);
   const femaleRef = useRef<HTMLInputElement>(null);
+  const termsRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,6 +36,7 @@ export const UncontrolledForm: React.FC = () => {
       age: Number(ageRef.current?.value ?? ''),
       email: emailRef.current?.value ?? '',
       gender: maleRef.current?.checked ? 'male' : 'female',
+      terms: termsRef.current?.checked ? true : false,
     };
 
     const newErrors: FormErrors = { ...EmptyFormValues };
@@ -67,6 +70,8 @@ export const UncontrolledForm: React.FC = () => {
       <InputNumberU id="age" nameRef={ageRef} errors={errors} />
       <InputTextU id="email" nameRef={emailRef} errors={errors} />
       <InputRadioU id="gender" femaleRef={femaleRef} maleRef={maleRef} errors={errors} />
+      <InputCheckboxU id="terms" nameRef={termsRef} errors={errors} />
+
       <button type="submit">Submit</button>
     </form>
   );

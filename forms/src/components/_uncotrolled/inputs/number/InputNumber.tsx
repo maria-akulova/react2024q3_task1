@@ -1,13 +1,7 @@
-import { FormErrors, FormValues } from 'components/index';
 import { fieldName } from 'src/utils/stringUtils';
+import { InputCommonPropsU } from 'components/index';
 
-interface InputNumberProps {
-  id: keyof FormValues;
-  nameRef: React.RefObject<HTMLInputElement>;
-  errors: FormErrors;
-}
-
-export const InputNumber: React.FC<InputNumberProps> = ({ id, nameRef, errors }) => {
+export const InputNumber: React.FC<InputCommonPropsU> = ({ id, nameRef, errors }) => {
   return (
     <div>
       <label htmlFor={id}>

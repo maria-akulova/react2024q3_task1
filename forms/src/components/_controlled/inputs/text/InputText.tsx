@@ -1,19 +1,12 @@
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { FormValues } from 'components/index';
-import { fieldName } from 'src/utils/stringUtils';
+import { InputCommonPropsC } from 'components/index';
+import { fieldName } from 'utils/stringUtils';
 
-interface InputTextProps {
-  id: keyof FormValues;
-  register: UseFormRegister<FormValues>;
-  errors: FieldErrors<FormValues>;
-}
-
-export const InputText: React.FC<InputTextProps> = ({ id, register, errors }) => {
+export const InputText: React.FC<InputCommonPropsC> = ({ id, register, errors }) => {
   return (
     <div>
       <label htmlFor={id}>
         {fieldName(id)}:
-        <input type="text" id={id} {...register(id)} />
+        <input type="text" id={id} {...register(id)} maxLength={30} />
       </label>
       {errors[id] && <p className="error">{errors[id].message}</p>}
     </div>

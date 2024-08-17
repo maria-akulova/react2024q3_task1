@@ -5,7 +5,13 @@ import { useDispatch } from 'react-redux';
 import { setFormData } from 'src/store/formSlice';
 import { useNavigate } from 'react-router-dom';
 import { validationSchema } from 'src/utils/validation';
-import { FormValues, InputTextC, InputNumberC, InputRadioC } from 'components/index';
+import {
+  FormValues,
+  InputTextC,
+  InputNumberC,
+  InputRadioC,
+  InputCheckboxC,
+} from 'components/index';
 
 export const ControlledForm: React.FC = () => {
   const {
@@ -17,6 +23,7 @@ export const ControlledForm: React.FC = () => {
     mode: 'onChange',
     defaultValues: {
       gender: 'male',
+      terms: false,
     },
   });
   const dispatch = useDispatch();
@@ -33,6 +40,8 @@ export const ControlledForm: React.FC = () => {
       <InputNumberC id="age" register={register('age', { valueAsNumber: true })} errors={errors} />
       <InputTextC id="email" register={register} errors={errors} />
       <InputRadioC id="gender" register={register} errors={errors} />
+      <InputCheckboxC id="terms" register={register} errors={errors} />
+
       <input type="submit" disabled={!isValid} />
     </form>
   );

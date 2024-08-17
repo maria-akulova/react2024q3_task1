@@ -4,7 +4,8 @@ export const validationSchema = yup.object().shape({
   name: yup
     .string()
     .required('Name is required')
-    .matches(/^[A-Z]/, 'Must start with an uppercase letter'),
+    .matches(/^[A-Z]/, 'Must start with an uppercase latin letter')
+    .matches(/^[a-zA-Z]+$/, 'Must have only latin letters'),
   age: yup
     .number()
     .typeError('Must be a number')
@@ -20,4 +21,5 @@ export const validationSchema = yup.object().shape({
     .matches(/^[^.]*\.[^.]*$/, 'Should contain one dot')
     .matches(/^[^@\s]+@[^.@\s]+\.[^@\s]+$/, 'Check the email format. Example: user@example.com'),
   gender: yup.string(),
+  terms: yup.boolean(),
 });

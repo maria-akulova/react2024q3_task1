@@ -13,7 +13,8 @@ const Main: React.FC = () => {
         <li key={data.id} className={style.data_items}>
           <div key={data.id || 'defaultkey'} className={style.card}>
             <p>
-              Name: {data.name}, Age: {data.age}, Email: {data.email}, Gender: {data.gender}
+              Name: {data.name}, Age: {data.age}, Email: {data.email}, Gender: {data.gender}, Accept
+              Terms and Conditions agreement: {data.terms ? 'Yes' : 'No'}
             </p>
           </div>
         </li>
