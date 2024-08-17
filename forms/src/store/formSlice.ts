@@ -1,4 +1,3 @@
-// src/store/formSlice.ts
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { FormValues } from 'src/components';
 

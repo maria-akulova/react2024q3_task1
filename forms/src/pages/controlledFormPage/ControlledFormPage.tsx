@@ -1,4 +1,3 @@
-// src/pages/ControlledFormPage.tsx
 import React from 'react';
 import { ControlledForm } from 'components/controlledForm/ControlledForm';
 

@@ -1,4 +1,3 @@
-// src/pages/Main.tsx
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
@@ -14,7 +13,7 @@ const Main: React.FC = () => {
         <li key={data.id} className={style.data_items}>
           <div key={data.id || 'defaultkey'} className={style.card}>
             <p>
-              Name: {data.name}, Age: {data.age}
+              Name: {data.name}, Age: {data.age}, Email: {data.email}
             </p>
           </div>
         </li>

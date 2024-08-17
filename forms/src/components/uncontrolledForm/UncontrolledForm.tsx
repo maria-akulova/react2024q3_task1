@@ -1,66 +1,71 @@
-// src/components/UncontrolledForm.tsx
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setFormData } from 'src/store/formSlice';
 import { validationSchema } from 'utils/validation';
-import { EmptyFormValues, FormErrors, FormValues } from 'components/index';
-interface IErrorValidation {
-  inner: {
-    path: string,
-    message: string,
-  }[];
-}
+import {
+  EmptyFormValues,
+  FormErrors,
+  FormValues,
+  InputNumberU,
+  InputTextU,
+} from 'components/index';
+import { ValidationError } from 'yup';
 
 export const UncontrolledForm: React.FC = () => {
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [errors, setErrors] = useState<FormErrors>();
+  const initErrors = { name: '', age: 0, email: '' };
+
+  const [errors, setErrors] = useState<FormErrors>(initErrors);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData: FormValues = {
       name: nameRef.current?.value ?? '',
-      age: ageRef.current?.value ? Number(ageRef.current?.value) : 0,
+      age: Number(ageRef.current?.value ?? ''),
+      email: emailRef.current?.value ?? '',
     };
 
-    try {
-      await validationSchema.validate(formData, { abortEarly: false });
-      setErrors(EmptyFormValues);
+    const newErrors: FormErrors = { ...EmptyFormValues };
+    let isValid = true;
+
+    const fields = Object.keys(formData);
+
+    for (const field of fields) {
+      try {
+        await validationSchema.validateAt(field, formData);
+        newErrors[field] = typeof field === 'number' ? 0 : '';
+      } catch (validationError) {
+        if (validationError instanceof ValidationError) {
+          newErrors[field] = validationError.message;
+        } else {
+          console.log(`Uknown errors: ${validationError}`);
+        }
+        isValid = false;
+      }
+    }
+
+    setErrors(newErrors);
+
+    if (isValid) {
       dispatch(setFormData(formData));
       navigate('/');
-    } catch (validationErrors: unknown) {
-      const errorMessages: FormErrors = EmptyFormValues;
-      const errors = validationErrors as IErrorValidation;
-      errors.inner.forEach((error: { path: string, message: string }) => {
-        errorMessages[error.path] = error.message;
-      });
-      setErrors(errorMessages);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} autoComplete="on">
-      <div>
-        <label>
-          Name:
-          <input type="text" ref={nameRef} />
-        </label>
-        {errors?.name && <p className="error">{errors.name}</p>}
-      </div>
-      <div>
-        <label>
-          Age:
-          <input type="number" ref={ageRef} />
-        </label>
-        {errors?.age && <p className="error">{errors.age}</p>}
-      </div>
-      <input type="submit" />
+      <InputTextU id="name" nameRef={nameRef} errors={errors} />
+      <InputNumberU id="age" nameRef={ageRef} errors={errors} />
+      <InputTextU id="email" nameRef={emailRef} errors={errors} />
+      <button type="submit">Submit</button>
     </form>
   );
 };

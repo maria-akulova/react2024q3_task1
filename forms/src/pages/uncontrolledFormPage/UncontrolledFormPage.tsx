@@ -1,4 +1,3 @@
-// src/pages/UncontrolledFormPage.tsx
 import React from 'react';
 import { UncontrolledForm } from 'components/uncontrolledForm/UncontrolledForm';
 

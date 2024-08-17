@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setFormData } from 'src/store/formSlice';
 import { useNavigate } from 'react-router-dom';
 import { validationSchema } from 'src/utils/validation';
-import { FormValues } from '..';
+import { FormValues, InputTextC, InputNumberC } from '..';
 
 export const ControlledForm: React.FC = () => {
   const {
@@ -26,20 +26,9 @@ export const ControlledForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
-      <div>
-        <label>
-          Name:
-          <input {...register('name')} />
-        </label>
-        {errors.name && <p className="error">{errors.name.message}</p>}
-      </div>
-      <div>
-        <label>
-          Age:
-          <input type="number" {...register('age', { valueAsNumber: true })} />
-        </label>
-        {errors.age && <p className="error">{errors.age.message}</p>}
-      </div>
+      <InputTextC id="name" register={register} errors={errors} />
+      <InputNumberC id="age" register={register('age', { valueAsNumber: true })} errors={errors} />
+      <InputTextC id="email" register={register} errors={errors} />
       <input type="submit" disabled={!isValid} />
     </form>
   );
