@@ -13,7 +13,7 @@ const Main: React.FC = () => {
         <li key={data.id} className={style.data_items}>
           <div key={data.id || 'defaultkey'} className={style.card}>
             <p>
-              Name: {data.name}, Age: {data.age}, Email: {data.email}
+              Name: {data.name}, Age: {data.age}, Email: {data.email}, Gender: {data.gender}
             </p>
           </div>
         </li>

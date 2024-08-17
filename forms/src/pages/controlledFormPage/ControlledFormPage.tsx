@@ -1,6 +1,6 @@
 import React from 'react';
-import { ControlledForm } from 'components/controlledForm/ControlledForm';
 import { Link } from 'react-router-dom';
+import { ControlledForm } from 'components/index';
 
 const ControlledFormPage: React.FC = () => {
   return (

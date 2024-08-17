@@ -19,4 +19,5 @@ export const validationSchema = yup.object().shape({
     .matches(/@+/, 'Should have symbol: @')
     .matches(/^[^.]*\.[^.]*$/, 'Should contain one dot')
     .matches(/^[^@\s]+@[^.@\s]+\.[^@\s]+$/, 'Check the email format. Example: user@example.com'),
+  gender: yup.string(),
 });

@@ -1,16 +1,22 @@
 import ErrorBoundary from './errorboundary/ErrorBoundary';
 import { Header } from './header/Header';
-import { ControlledForm } from './controlledForm/ControlledForm';
-import { UncontrolledForm } from './uncontrolledForm/UncontrolledForm';
-import { InputText as InputTextC } from './inputsControlled/inputText/InputText';
-import { InputNumber as InputNumberC } from './inputsControlled/inputNumber/InputNumber';
-import { InputText as InputTextU } from './inputsUncontrolled/inputText/InputText';
-import { InputNumber as InputNumberU } from './inputsUncontrolled/inputNumber/InputNumber';
+import { ControlledForm } from './_controlled/form/ControlledForm';
+import { UncontrolledForm } from './_uncotrolled/form/UncontrolledForm';
+
+import { InputText as InputTextC } from './_controlled/inputs/text/InputText';
+import { InputNumber as InputNumberC } from './_controlled/inputs/number/InputNumber';
+import { InputRadio as InputRadioC } from './_controlled/inputs/radio/InputRadio';
+
+import { InputText as InputTextU } from './_uncotrolled/inputs/inputText/InputText';
+import { InputNumber as InputNumberU } from './_uncotrolled/inputs/number/InputNumber';
+import { InputRadio as InputRadioU } from './_uncotrolled/inputs/radio/InputRadio';
+
 interface FormValues {
   id?: string;
   name: string;
   age: number;
   email: string;
+  gender?: string;
 }
 
 interface FormErrors {
@@ -21,6 +27,7 @@ const EmptyFormValues = {
   name: '',
   age: 0,
   email: '',
+  gender: 'male',
 };
 
 export {
@@ -29,9 +36,11 @@ export {
   ControlledForm,
   UncontrolledForm,
   EmptyFormValues,
-  InputTextC,
   InputTextU,
-  InputNumberC,
   InputNumberU,
+  InputRadioU,
+  InputTextC,
+  InputNumberC,
+  InputRadioC,
 };
 export type { FormValues, FormErrors };

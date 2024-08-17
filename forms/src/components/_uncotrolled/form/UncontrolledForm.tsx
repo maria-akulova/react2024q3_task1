@@ -8,21 +8,23 @@ import {
   FormErrors,
   FormValues,
   InputNumberU,
+  InputRadioU,
   InputTextU,
 } from 'components/index';
 import { ValidationError } from 'yup';
 
 export const UncontrolledForm: React.FC = () => {
+  const fields = Object.keys(EmptyFormValues);
+
   const nameRef = useRef<HTMLInputElement>(null);
   const ageRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+  const maleRef = useRef<HTMLInputElement>(null);
+  const femaleRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const initErrors = { name: '', age: 0, email: '' };
-
-  const [errors, setErrors] = useState<FormErrors>(initErrors);
+  const [errors, setErrors] = useState<FormErrors>(EmptyFormValues);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,12 +33,11 @@ export const UncontrolledForm: React.FC = () => {
       name: nameRef.current?.value ?? '',
       age: Number(ageRef.current?.value ?? ''),
       email: emailRef.current?.value ?? '',
+      gender: maleRef.current?.checked ? 'male' : 'female',
     };
 
     const newErrors: FormErrors = { ...EmptyFormValues };
     let isValid = true;
-
-    const fields = Object.keys(formData);
 
     for (const field of fields) {
       try {
@@ -65,6 +66,7 @@ export const UncontrolledForm: React.FC = () => {
       <InputTextU id="name" nameRef={nameRef} errors={errors} />
       <InputNumberU id="age" nameRef={ageRef} errors={errors} />
       <InputTextU id="email" nameRef={emailRef} errors={errors} />
+      <InputRadioU id="gender" femaleRef={femaleRef} maleRef={maleRef} errors={errors} />
       <button type="submit">Submit</button>
     </form>
   );

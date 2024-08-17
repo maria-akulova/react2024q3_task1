@@ -1,4 +1,5 @@
-import { FormErrors, FormValues } from '../..';
+import { FormErrors, FormValues } from 'components/index';
+import { fieldName } from 'src/utils/stringUtils';
 
 interface InputTextProps {
   id: keyof FormValues;
@@ -7,12 +8,10 @@ interface InputTextProps {
 }
 
 export const InputText: React.FC<InputTextProps> = ({ id, nameRef, errors }) => {
-  const idString = id.toString();
-  const fieldName = idString[0].toUpperCase() + idString.slice(1);
   return (
     <div>
       <label htmlFor={id}>
-        {fieldName}:
+        {fieldName(id)}:
         <input type="text" id={id} ref={nameRef} />
       </label>
       {errors[id] && <p className="error">{errors[id]}</p>}

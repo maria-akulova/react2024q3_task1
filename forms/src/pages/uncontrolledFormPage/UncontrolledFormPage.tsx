@@ -1,5 +1,5 @@
 import React from 'react';
-import { UncontrolledForm } from 'components/uncontrolledForm/UncontrolledForm';
+import { UncontrolledForm } from 'components/index';
 import { Link } from 'react-router-dom';
 
 const UncontrolledFormPage: React.FC = () => {

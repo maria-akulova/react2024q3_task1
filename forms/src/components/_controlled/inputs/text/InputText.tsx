@@ -1,5 +1,6 @@
-import { FormValues } from '../..';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FormValues } from 'components/index';
+import { fieldName } from 'src/utils/stringUtils';
 
 interface InputTextProps {
   id: keyof FormValues;
@@ -8,12 +9,10 @@ interface InputTextProps {
 }
 
 export const InputText: React.FC<InputTextProps> = ({ id, register, errors }) => {
-  const idString = id.toString();
-  const fieldName = idString[0].toUpperCase() + idString.slice(1);
   return (
     <div>
       <label htmlFor={id}>
-        {fieldName}:
+        {fieldName(id)}:
         <input type="text" id={id} {...register(id)} />
       </label>
       {errors[id] && <p className="error">{errors[id].message}</p>}
