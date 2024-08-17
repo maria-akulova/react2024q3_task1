@@ -11,11 +11,11 @@ interface InputRadioProps {
 export const InputRadio: React.FC<InputRadioProps> = ({ id, register, errors }) => {
   return (
     <div>
-      <label>
+      <label htmlFor={id}>
         {fieldName(id)}
-        <input type="radio" id={`${id}-male`} {...register(id)} value="male" />
+        <input type="radio" id={id} {...register(id)} value="male" />
         Male
-        <input type="radio" id={`${id}-female`} {...register(id)} value="female" />
+        <input type="radio" id={id} {...register(id)} value="female" />
         Female
       </label>
       {errors[id] && <p className="error">{errors[id]?.message}</p>}

@@ -15,9 +15,9 @@ export const InputRadio: React.FC<InputRadioProps> = ({ id, maleRef, femaleRef, 
     <div>
       <label htmlFor={id}>
         {fieldName(id)}
-        <input type="radio" id={id} name={id} value="male" ref={maleRef} defaultChecked />
+        <input type="radio" name={id} value="male" ref={maleRef} defaultChecked />
         Male
-        <input type="radio" id={id} name={id} value="female" ref={femaleRef} />
+        <input type="radio" name={id} value="female" ref={femaleRef} />
         Female
       </label>
       {errors[id] && <p className="error">{errors[id]?.message}</p>}
