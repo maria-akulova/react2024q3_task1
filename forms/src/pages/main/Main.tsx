@@ -17,8 +17,8 @@ const Main: React.FC = () => {
           <div key={data.id || 'defaultkey'} className={style.card}>
             <h2>{data.name}</h2>
             <div>
-              My name is {data.name}. I&apos;m {data.age}, {data.gender}. You can contact me by
-              email: {data.email}.
+              My name is {data.name}. I&apos;m {data.age}, {data.gender} from {data.country}. You
+              can contact me by email: {data.email}.
             </div>
             <div>
               I {data.terms ? 'Accept' : "DON'T accept"} yours Terms and Conditions agreement.{' '}

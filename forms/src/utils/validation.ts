@@ -54,4 +54,5 @@ export const validationSchema = yup.object().shape({
     .string()
     .required('Confirm password is required')
     .oneOf([yup.ref('password')], 'Passwords do not match'),
+  country: yup.string().required('Country is required'),
 });

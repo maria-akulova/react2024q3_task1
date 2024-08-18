@@ -10,6 +10,7 @@ import { InputCheckbox as InputCheckboxC } from './_controlled/inputs/checkbox/I
 import { InputFile as InputFileC } from './_controlled/inputs/file/InputFile';
 import { Password as PasswordC } from './_controlled/password/Password';
 import { PasswordConfirmed as PasswordConfirmedC } from './_controlled/password/PasswordComfirmed';
+import { Country as CountryC } from './_controlled/country/Country';
 
 import { InputText as InputTextU } from './_uncotrolled/inputs/inputText/InputText';
 import { InputNumber as InputNumberU } from './_uncotrolled/inputs/number/InputNumber';
@@ -19,6 +20,7 @@ import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { InputFile as InputFileU } from './_uncotrolled/inputs/file/InputFile';
 import { Password as PasswordU } from './_uncotrolled/password/Password';
 import { PasswordConfirmed as PasswordConfirmedU } from './_uncotrolled/password/PasswordComfirmed';
+import { Country as CountryU } from './_uncotrolled/country/Country';
 
 interface FormValues {
   id?: string;
@@ -30,6 +32,7 @@ interface FormValues {
   photo: string | FileList;
   password: string;
   confirmPassword: string;
+  country: string;
 }
 
 interface FormErrors {
@@ -45,6 +48,7 @@ const EmptyFormValues = {
   photo: '',
   password: '',
   confirmPassword: '',
+  country: '',
 };
 
 interface InputCommonPropsU {
@@ -71,6 +75,7 @@ export {
   InputFileU,
   PasswordU,
   PasswordConfirmedU,
+  CountryU,
   InputTextC,
   InputNumberC,
   InputRadioC,
@@ -78,5 +83,6 @@ export {
   InputFileC,
   PasswordC,
   PasswordConfirmedC,
+  CountryC,
 };
 export type { FormValues, FormErrors, InputCommonPropsU, InputCommonPropsC };
