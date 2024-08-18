@@ -11,11 +11,18 @@ const Main: React.FC = () => {
     source.map((data) => {
       return (
         <li key={data.id} className={style.data_items}>
+          <div className={style.photo}>
+            <img src={data.photo as string} alt="User image" />
+          </div>
           <div key={data.id || 'defaultkey'} className={style.card}>
-            <p>
-              Name: {data.name}, Age: {data.age}, Email: {data.email}, Gender: {data.gender}, Accept
-              Terms and Conditions agreement: {data.terms ? 'Yes' : 'No'}
-            </p>
+            <h2>{data.name}</h2>
+            <div>
+              My name is {data.name}. I&apos;m {data.age}, {data.gender}. You can contact me by
+              email: {data.email}.
+            </div>
+            <div>
+              I {data.terms ? 'Accept' : "DON'T accept"} yours Terms and Conditions agreement.{' '}
+            </div>
           </div>
         </li>
       );

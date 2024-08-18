@@ -36,13 +36,15 @@ export const UncontrolledForm: React.FC = () => {
     'use server';
     e.preventDefault();
 
+    const photo = photoRef.current?.files ? photoRef.current.files : '';
+
     const formData: FormValues = {
       name: nameRef.current?.value ?? '',
       age: Number(ageRef.current?.value ?? ''),
       email: emailRef.current?.value ?? '',
       gender: maleRef.current?.checked ? 'male' : 'female',
       terms: termsRef.current?.checked ? true : false,
-      photo: photoRef?.current?.files?.length ? photoRef.current.files : '',
+      photo: photo,
     };
 
     const newErrors: FormErrors = { ...EmptyFormValues };
