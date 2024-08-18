@@ -6,6 +6,7 @@ import { validationSchema } from 'utils/validation';
 import { formatPhoto } from 'utils/stringUtils';
 import { ValidationError } from 'yup';
 import {
+  CountryU,
   EmptyFormValues,
   ErrorBoundary,
   FormErrors,
@@ -31,6 +32,7 @@ export const UncontrolledForm: React.FC = () => {
   const photoRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  const countryRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,6 +53,7 @@ export const UncontrolledForm: React.FC = () => {
       photo: photo,
       password: passwordRef.current?.value ?? '',
       confirmPassword: confirmPasswordRef.current?.value ?? '',
+      country: countryRef.current?.value ?? '',
     };
 
     const newErrors: FormErrors = { ...EmptyFormValues };
@@ -82,14 +85,15 @@ export const UncontrolledForm: React.FC = () => {
   return (
     <ErrorBoundary>
       <form onSubmit={handleSubmit} autoComplete="on" className="form">
+        <InputCheckboxU id="terms" nameRef={termsRef} errors={errors} />
+        <InputRadioU id="gender" femaleRef={femaleRef} maleRef={maleRef} errors={errors} />
         <InputTextU id="name" nameRef={nameRef} errors={errors} />
         <InputNumberU id="age" nameRef={ageRef} errors={errors} />
         <InputTextU id="email" nameRef={emailRef} errors={errors} />
-        <InputRadioU id="gender" femaleRef={femaleRef} maleRef={maleRef} errors={errors} />
-        <InputCheckboxU id="terms" nameRef={termsRef} errors={errors} />
         <InputFileU id="photo" nameRef={photoRef} errors={errors} />
         <PasswordU id="password" nameRef={passwordRef} errors={errors} />
         <PasswordConfirmedU id="confirmPassword" nameRef={confirmPasswordRef} errors={errors} />
+        <CountryU id="country" nameRef={countryRef} errors={errors} />
 
         <button type="submit" className="submit">
           Submit

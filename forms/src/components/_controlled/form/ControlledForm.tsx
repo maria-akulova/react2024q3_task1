@@ -15,6 +15,7 @@ import {
   FormValues,
   PasswordC,
   PasswordConfirmedC,
+  CountryC,
 } from 'components/index';
 import { getBase64 } from 'src/utils/stringUtils';
 
@@ -69,6 +70,7 @@ export const ControlledForm: React.FC = () => {
         <InputFileC id="photo" register={register} errors={errors} />
         <PasswordC id="password" register={register} errors={errors} />
         <PasswordConfirmedC id="confirmPassword" register={register} errors={errors} />
+        <CountryC id="country" register={register} errors={errors} />
 
         <input type="submit" disabled={!isValid} className="submit" />
       </form>
