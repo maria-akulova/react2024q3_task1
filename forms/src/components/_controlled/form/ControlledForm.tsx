@@ -4,14 +4,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
 import { setFormData } from 'src/store/formSlice';
 import { useNavigate } from 'react-router-dom';
-import { validationSchema } from 'src/utils/validation';
+import { validationSchema } from 'utils/validation';
 import {
-  FormValues,
   InputTextC,
   InputNumberC,
   InputRadioC,
   InputCheckboxC,
+  ErrorBoundary,
+  InputFileC,
+  FormValues,
 } from 'components/index';
+import { getBase64 } from 'src/utils/stringUtils';
 
 export const ControlledForm: React.FC = () => {
   const {
@@ -26,23 +29,49 @@ export const ControlledForm: React.FC = () => {
       terms: false,
     },
   });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    dispatch(setFormData(data));
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    let photoData: string = '';
+
+    if (data.photo instanceof FileList && data.photo.length > 0) {
+      photoData = await getBase64(data.photo[0]);
+    } else if (typeof data.photo === 'string') {
+      photoData = data.photo;
+    }
+
+    dispatch(
+      setFormData({
+        name: data.name,
+        age: data.age,
+        email: data.email,
+        gender: data.gender,
+        terms: data.terms,
+        photo: photoData,
+      }),
+    );
+
     navigate('/');
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
-      <InputTextC id="name" register={register} errors={errors} />
-      <InputNumberC id="age" register={register('age', { valueAsNumber: true })} errors={errors} />
-      <InputTextC id="email" register={register} errors={errors} />
-      <InputRadioC id="gender" register={register} errors={errors} />
-      <InputCheckboxC id="terms" register={register} errors={errors} />
+    <ErrorBoundary>
+      <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
+        <InputTextC id="name" register={register} errors={errors} />
+        <InputNumberC
+          id="age"
+          register={register('age', { valueAsNumber: true })}
+          errors={errors}
+        />
+        <InputTextC id="email" register={register} errors={errors} />
+        <InputRadioC id="gender" register={register} errors={errors} />
+        <InputCheckboxC id="terms" register={register} errors={errors} />
+        <InputFileC id="photo" register={register} errors={errors} />
 
-      <input type="submit" disabled={!isValid} />
-    </form>
+        <input type="submit" disabled={!isValid} />
+      </form>
+    </ErrorBoundary>
   );
 };

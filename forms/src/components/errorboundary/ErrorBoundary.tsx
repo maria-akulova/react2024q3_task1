@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -24,7 +25,13 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
   render() {
     if (this.state.hasError) {
-      return <h1>Something went wrong. Try to reload the page.</h1>;
+      return (
+        <div>
+          <h4>Something went wrong. Try to reload the page or</h4>
+          <h4>You can come back to </h4>
+          <Link to="/">Main Form</Link>
+        </div>
+      );
     }
 
     return this.props.children;

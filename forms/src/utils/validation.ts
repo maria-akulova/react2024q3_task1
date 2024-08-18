@@ -22,4 +22,25 @@ export const validationSchema = yup.object().shape({
     .matches(/^[^@\s]+@[^.@\s]+\.[^@\s]+$/, 'Check the email format. Example: user@example.com'),
   gender: yup.string(),
   terms: yup.boolean(),
+  photo: yup
+    .mixed<FileList | string>()
+    .required('Photo is required')
+    .test('fileSize', 'The file size should not exceed 5MB', (value) => {
+      if (typeof value === 'string') {
+        return true;
+      }
+      if (value instanceof FileList && value.length > 0) {
+        return value[0].size <= 5 * 1024 * 1024;
+      }
+      return false;
+    })
+    .test('fileFormat', 'Unsupported Format. Use jpeg or png.', (value) => {
+      if (typeof value === 'string') {
+        return true;
+      }
+      if (value instanceof FileList && value.length > 0) {
+        return ['image/jpeg', 'image/png'].includes(value[0].type);
+      }
+      return false;
+    }),
 });

@@ -3,16 +3,19 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setFormData } from 'src/store/formSlice';
 import { validationSchema } from 'utils/validation';
+import { formatPhoto } from 'utils/stringUtils';
+import { ValidationError } from 'yup';
 import {
   EmptyFormValues,
+  ErrorBoundary,
   FormErrors,
   FormValues,
   InputCheckboxU,
+  InputFileU,
   InputNumberU,
   InputRadioU,
   InputTextU,
 } from 'components/index';
-import { ValidationError } from 'yup';
 
 export const UncontrolledForm: React.FC = () => {
   const fields = Object.keys(EmptyFormValues);
@@ -23,12 +26,14 @@ export const UncontrolledForm: React.FC = () => {
   const maleRef = useRef<HTMLInputElement>(null);
   const femaleRef = useRef<HTMLInputElement>(null);
   const termsRef = useRef<HTMLInputElement>(null);
+  const photoRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<FormErrors>(EmptyFormValues);
 
   const handleSubmit = async (e: React.FormEvent) => {
+    'use server';
     e.preventDefault();
 
     const formData: FormValues = {
@@ -37,6 +42,7 @@ export const UncontrolledForm: React.FC = () => {
       email: emailRef.current?.value ?? '',
       gender: maleRef.current?.checked ? 'male' : 'female',
       terms: termsRef.current?.checked ? true : false,
+      photo: photoRef?.current?.files?.length ? photoRef.current.files : '',
     };
 
     const newErrors: FormErrors = { ...EmptyFormValues };
@@ -59,20 +65,24 @@ export const UncontrolledForm: React.FC = () => {
     setErrors(newErrors);
 
     if (isValid) {
-      dispatch(setFormData(formData));
+      const photoUpload = await formatPhoto(formData.photo[0]);
+      dispatch(setFormData({ ...formData, photo: photoUpload }));
       navigate('/');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="on">
-      <InputTextU id="name" nameRef={nameRef} errors={errors} />
-      <InputNumberU id="age" nameRef={ageRef} errors={errors} />
-      <InputTextU id="email" nameRef={emailRef} errors={errors} />
-      <InputRadioU id="gender" femaleRef={femaleRef} maleRef={maleRef} errors={errors} />
-      <InputCheckboxU id="terms" nameRef={termsRef} errors={errors} />
+    <ErrorBoundary>
+      <form onSubmit={handleSubmit} autoComplete="on">
+        <InputTextU id="name" nameRef={nameRef} errors={errors} />
+        <InputNumberU id="age" nameRef={ageRef} errors={errors} />
+        <InputTextU id="email" nameRef={emailRef} errors={errors} />
+        <InputRadioU id="gender" femaleRef={femaleRef} maleRef={maleRef} errors={errors} />
+        <InputCheckboxU id="terms" nameRef={termsRef} errors={errors} />
+        <InputFileU id="photo" nameRef={photoRef} errors={errors} />
 
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit">Submit</button>
+      </form>
+    </ErrorBoundary>
   );
 };
