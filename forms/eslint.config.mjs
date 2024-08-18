@@ -82,6 +82,7 @@ export default [
       ],
       'react/display-name': 'off',
       'react/no-children-prop': 'off',
+      'react/prop-types': 'off',
       'react-compiler/react-compiler': 'error',
       'react/react-in-jsx-scope': 'off',
       'react-refresh/only-export-components': [

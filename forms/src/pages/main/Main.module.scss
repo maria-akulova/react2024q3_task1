@@ -1,5 +1,24 @@
-.navigator {
-  > li {
-    list-style-type: none;
+.data_items {
+  list-style-type: none;
+  min-width: 280px;
+  max-width: 30%;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.data_items:first-child {
+  border: 1px red solid;
+}
+
+.photo {
+  margin: 20px 10px 0 0;
+
+  >img {
+    width: 60px;
+    height: fit-content;
+
   }
 }

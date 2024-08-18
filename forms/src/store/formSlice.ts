@@ -1,34 +1,30 @@
-// src/store/formSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export interface FormData {
-  name: string;
-  age: number;
-}
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
+import { FormValues } from 'src/components';
 
 export interface FormState {
-  uncontrolledFormData: FormData | null;
-  controlledFormData: FormData | null;
+  formData: FormValues[];
 }
 
 export const initialState: FormState = {
-  uncontrolledFormData: null,
-  controlledFormData: null,
+  formData: [],
 };
 
 const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
-    setUncontrolledFormData: (state, action: PayloadAction<FormData>) => {
-      state.uncontrolledFormData = action.payload;
-    },
-    setControlledFormData: (state, action: PayloadAction<FormData>) => {
-      state.controlledFormData = action.payload;
+    setFormData: {
+      reducer: (state, action: PayloadAction<FormValues>) => {
+        state.formData.unshift(action.payload);
+      },
+      prepare: (data: FormValues) => {
+        const id = nanoid();
+        return { payload: { id, ...data } };
+      },
     },
   },
 });
 
-export const { setUncontrolledFormData, setControlledFormData } = formSlice.actions;
+export const { setFormData } = formSlice.actions;
 
 export default formSlice.reducer;

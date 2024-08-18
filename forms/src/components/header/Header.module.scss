@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+
+  > h1 {
+    margin-left: 30%;
+
+    @media (width<900px) {
+      margin-left: 20px;
+    }
+  }
+
+  > div > ul {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+  }
+
+  > div > ul > li {
+    list-style-type: none;
+    margin-right: 20px;
+
+    @media (width<400px) {
+      margin-right: 10px;
+    }
+  }
+}

@@ -1,11 +1,14 @@
-// src/pages/ControlledFormPage.tsx
 import React from 'react';
-import { ControlledForm } from 'components/controlledForm/ControlledForm';
+import { Link } from 'react-router-dom';
+import { ControlledForm } from 'components/index';
 
 const ControlledFormPage: React.FC = () => {
   return (
     <div>
-      <h1>Controlled Form</h1>
+      <div className="header">
+        <h1>Controlled Form</h1>
+        <Link to="/">Main Form</Link>
+      </div>
       <ControlledForm />
     </div>
   );
