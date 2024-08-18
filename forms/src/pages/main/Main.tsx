@@ -23,6 +23,7 @@ const Main: React.FC = () => {
             <div>
               I {data.terms ? 'Accept' : "DON'T accept"} yours Terms and Conditions agreement.{' '}
             </div>
+            <div>Password usually is hidden: {data.password}</div>
           </div>
         </li>
       );

@@ -15,6 +15,8 @@ import {
   InputNumberU,
   InputRadioU,
   InputTextU,
+  PasswordConfirmedU,
+  PasswordU,
 } from 'components/index';
 
 export const UncontrolledForm: React.FC = () => {
@@ -27,6 +29,8 @@ export const UncontrolledForm: React.FC = () => {
   const femaleRef = useRef<HTMLInputElement>(null);
   const termsRef = useRef<HTMLInputElement>(null);
   const photoRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,6 +49,8 @@ export const UncontrolledForm: React.FC = () => {
       gender: maleRef.current?.checked ? 'male' : 'female',
       terms: termsRef.current?.checked ? true : false,
       photo: photo,
+      password: passwordRef.current?.value ?? '',
+      confirmPassword: confirmPasswordRef.current?.value ?? '',
     };
 
     const newErrors: FormErrors = { ...EmptyFormValues };
@@ -75,15 +81,19 @@ export const UncontrolledForm: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <form onSubmit={handleSubmit} autoComplete="on">
+      <form onSubmit={handleSubmit} autoComplete="on" className="form">
         <InputTextU id="name" nameRef={nameRef} errors={errors} />
         <InputNumberU id="age" nameRef={ageRef} errors={errors} />
         <InputTextU id="email" nameRef={emailRef} errors={errors} />
         <InputRadioU id="gender" femaleRef={femaleRef} maleRef={maleRef} errors={errors} />
         <InputCheckboxU id="terms" nameRef={termsRef} errors={errors} />
         <InputFileU id="photo" nameRef={photoRef} errors={errors} />
+        <PasswordU id="password" nameRef={passwordRef} errors={errors} />
+        <PasswordConfirmedU id="confirmPassword" nameRef={confirmPasswordRef} errors={errors} />
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="submit">
+          Submit
+        </button>
       </form>
     </ErrorBoundary>
   );

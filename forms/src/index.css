@@ -23,6 +23,8 @@ body {
   margin: 0 auto;
   display: flex;
   place-items: center;
+  justify-content: center;
+
 }
 
 h1 {
@@ -67,5 +69,33 @@ button:focus-visible {
     @media (width<600px) {
       font-size: 2rem;
     }
+  }
+}
+
+.showPassword {
+  background-color: var(--background-secondary);
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: var(--background-secondary-hover);
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  .submit {
+    width: 140px;
+    border-radius: 5px;
+  }
+
+  input {
+    margin-left: 10px;
+  }
+
+  >div {
+    height: 30px;
   }
 }

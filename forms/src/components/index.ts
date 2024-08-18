@@ -8,6 +8,8 @@ import { InputNumber as InputNumberC } from './_controlled/inputs/number/InputNu
 import { InputRadio as InputRadioC } from './_controlled/inputs/radio/InputRadio';
 import { InputCheckbox as InputCheckboxC } from './_controlled/inputs/checkbox/InputCheckbox';
 import { InputFile as InputFileC } from './_controlled/inputs/file/InputFile';
+import { Password as PasswordC } from './_controlled/password/Password';
+import { PasswordConfirmed as PasswordConfirmedC } from './_controlled/password/PasswordComfirmed';
 
 import { InputText as InputTextU } from './_uncotrolled/inputs/inputText/InputText';
 import { InputNumber as InputNumberU } from './_uncotrolled/inputs/number/InputNumber';
@@ -15,6 +17,8 @@ import { InputRadio as InputRadioU } from './_uncotrolled/inputs/radio/InputRadi
 import { InputCheckbox as InputCheckboxU } from './_uncotrolled/inputs/checkbox/InputCheckbox';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { InputFile as InputFileU } from './_uncotrolled/inputs/file/InputFile';
+import { Password as PasswordU } from './_uncotrolled/password/Password';
+import { PasswordConfirmed as PasswordConfirmedU } from './_uncotrolled/password/PasswordComfirmed';
 
 interface FormValues {
   id?: string;
@@ -24,6 +28,8 @@ interface FormValues {
   gender?: string;
   terms?: boolean;
   photo: string | FileList;
+  password: string;
+  confirmPassword: string;
 }
 
 interface FormErrors {
@@ -37,6 +43,8 @@ const EmptyFormValues = {
   gender: 'male',
   terms: false,
   photo: '',
+  password: '',
+  confirmPassword: '',
 };
 
 interface InputCommonPropsU {
@@ -61,10 +69,14 @@ export {
   InputRadioU,
   InputCheckboxU,
   InputFileU,
+  PasswordU,
+  PasswordConfirmedU,
   InputTextC,
   InputNumberC,
   InputRadioC,
   InputCheckboxC,
   InputFileC,
+  PasswordC,
+  PasswordConfirmedC,
 };
 export type { FormValues, FormErrors, InputCommonPropsU, InputCommonPropsC };

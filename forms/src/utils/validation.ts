@@ -43,4 +43,15 @@ export const validationSchema = yup.object().shape({
       }
       return false;
     }),
+  password: yup
+    .string()
+    .required('Password is required')
+    .matches(/(?=.*\d)/, 'Password must contain at least one digit')
+    .matches(/(?=.*[a-z])/, 'Password must contain at least one lowercase letter')
+    .matches(/(?=.*[A-Z])/, 'Password must contain at least one uppercase letter')
+    .matches(/(?=.*\W)/, 'Password must contain at least one special character'),
+  confirmPassword: yup
+    .string()
+    .required('Confirm password is required')
+    .oneOf([yup.ref('password')], 'Passwords do not match'),
 });

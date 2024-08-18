@@ -13,6 +13,8 @@ import {
   ErrorBoundary,
   InputFileC,
   FormValues,
+  PasswordC,
+  PasswordConfirmedC,
 } from 'components/index';
 import { getBase64 } from 'src/utils/stringUtils';
 
@@ -44,11 +46,7 @@ export const ControlledForm: React.FC = () => {
 
     dispatch(
       setFormData({
-        name: data.name,
-        age: data.age,
-        email: data.email,
-        gender: data.gender,
-        terms: data.terms,
+        ...data,
         photo: photoData,
       }),
     );
@@ -58,7 +56,9 @@ export const ControlledForm: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <form onSubmit={handleSubmit(onSubmit)} autoComplete="on">
+      <form onSubmit={handleSubmit(onSubmit)} autoComplete="on" className="form">
+        <InputCheckboxC id="terms" register={register} errors={errors} />
+        <InputRadioC id="gender" register={register} errors={errors} />
         <InputTextC id="name" register={register} errors={errors} />
         <InputNumberC
           id="age"
@@ -66,11 +66,11 @@ export const ControlledForm: React.FC = () => {
           errors={errors}
         />
         <InputTextC id="email" register={register} errors={errors} />
-        <InputRadioC id="gender" register={register} errors={errors} />
-        <InputCheckboxC id="terms" register={register} errors={errors} />
         <InputFileC id="photo" register={register} errors={errors} />
+        <PasswordC id="password" register={register} errors={errors} />
+        <PasswordConfirmedC id="confirmPassword" register={register} errors={errors} />
 
-        <input type="submit" disabled={!isValid} />
+        <input type="submit" disabled={!isValid} className="submit" />
       </form>
     </ErrorBoundary>
   );
