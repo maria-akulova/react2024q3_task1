@@ -1,0 +1,6 @@
+/dist
+node_modules
+**/*.jpg
+node_modules/
+build/
+coverage/

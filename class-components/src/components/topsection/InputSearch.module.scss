@@ -1,0 +1,24 @@
+.input,
+.searchButton {
+  margin: 10px;
+  height: 40px;
+  width: 250px;
+  border-radius: 10px;
+  padding: 0 10px;
+}
+
+.searchButton {
+  margin: 10px 0;
+  padding: 5px 10px;
+  font-size: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background-color: wheat;
+    cursor: pointer;
+  }
+}
+
+.searchLabel {
+  font-size: 2rem;
+}
