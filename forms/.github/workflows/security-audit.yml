@@ -1,0 +1,45 @@
+name: Security Audit
+
+on:
+  push:
+    branches: [ forms ]
+  pull_request:
+    branches: [ forms ]
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: 'forms/package-lock.json'
+    
+    - name: Install dependencies
+      working-directory: forms
+      run: npm ci
+    
+    - name: Run npm audit
+      working-directory: forms
+      run: npm audit --audit-level=moderate
+    
+    - name: Generate audit report
+      if: always()
+      working-directory: forms
+      run: npm audit --json > audit-report.json || true
+    
+    - name: Upload audit report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: npm-audit-report-${{ matrix.node-version }}
+        path: forms/audit-report.json
