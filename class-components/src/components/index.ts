@@ -2,6 +2,8 @@ import { InputSearch } from './topsection/InputSearch';
 import { ResultSearch } from './mainsection/ResultSearch';
 import { Spinner } from './spinner/Spinner';
 import ErrorBoundary from './errorboundary/ErrorBoundary';
+import { AnimalDetails } from './details/AnimalDetails';
+import { Pagination } from './pagination/Pagination';
 
 interface Animal {
   avian: boolean;
@@ -13,5 +15,20 @@ interface Animal {
   uid: string;
 }
 
-export { InputSearch, ResultSearch, Spinner, ErrorBoundary };
+interface Page {
+  pageNumber: number;
+  pageSize: number;
+  numberOfElements: number;
+  totalElements: number;
+  totalPages: number;
+  firstPage: boolean;
+  lastPage: boolean;
+}
+
+export interface SearchResult {
+  page: Page;
+  animals: Animal[];
+}
+
+export { InputSearch, ResultSearch, Spinner, ErrorBoundary, AnimalDetails, Pagination };
 export type { Animal };

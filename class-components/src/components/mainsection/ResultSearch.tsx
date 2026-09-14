@@ -1,41 +1,39 @@
-import { Component } from 'react';
+import React from 'react';
 import style from './ResultSearch.module.scss';
-import { Animal } from 'components';
+import { Animal } from 'components/index';
 
 interface ResultSearchProps {
   animals: Animal[];
+  onItemClick: (id: string) => void;
+  activeAnimalId: string | null;
 }
 
-export class ResultSearch extends Component<ResultSearchProps> {
-  getAnimalType(animal: Animal): string {
-    if (animal.avian) return 'Avian';
-    if (animal.canine) return 'Canine';
-    if (animal.earthAnimal) return 'Earth Animal';
-    if (animal.earthInsect) return 'Earth Insect';
-    if (animal.feline) return 'Feline';
-    return 'not defined by defualt';
-  }
-
-  render() {
-    const { animals } = this.props;
-
-    return (
-      <>
-        <section className={style.section}>
-          {animals.length === 0 && (
-            <div className={style.noResults}>No results. Try another name.</div>
-          )}
+export const ResultSearch: React.FC<ResultSearchProps> = ({
+  animals,
+  onItemClick,
+  activeAnimalId,
+}) => {
+  return (
+    <>
+      <section className={style.section}>
+        {animals.length === 0 && (
+          <div className={style.noResults}>No results. Try another name.</div>
+        )}
+        <div>
           {animals.map((animal) => (
-            <div key={animal.uid} className={style.animal}>
+            <div
+              key={animal.uid}
+              className={`${style.animal} ${activeAnimalId === animal.uid ? style.active : ''}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                onItemClick(animal.uid);
+              }}
+            >
               <p>{animal.name}</p>
-              <div className={style.description}>
-                <p>Unique number: {animal.uid}</p>
-                <p>The Type is {this.getAnimalType(animal)}</p>
-              </div>
             </div>
           ))}
-        </section>
-      </>
-    );
-  }
-}
+        </div>
+      </section>
+    </>
+  );
+};

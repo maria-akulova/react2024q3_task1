@@ -1,0 +1,35 @@
+.card {
+  padding: 2em;
+}
+
+.read_the_docs {
+  color: #888;
+}
+
+.search_result {
+  display: flex;
+  min-height: 650px;
+  flex-direction: column;
+  border-radius: 20px;
+  padding: 20px;
+  background-image: url(/public/family.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  min-height: 650px;
+}
+
+.right_section {
+  margin: 10% auto auto;
+}
+
+.details {
+  background-color: aliceblue;
+  border-radius: 20px;
+  padding: 20px;
+}

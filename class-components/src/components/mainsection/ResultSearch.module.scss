@@ -11,13 +11,17 @@
 
 .animal {
   width: 200px;
-  height: 150px;
   border: 1px solid black;
   border-radius: 10px;
   margin: 10px 10px 0 0;
   padding: 10px;
   background-color: white;
   font-size: 2rem;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(91, 100, 101);
+    color: aliceblue;
+  }
 }
 
 .description,
@@ -28,4 +32,9 @@
 
 .noResults {
   font-size: 2rem;
+}
+
+.animal.active {
+  background-color: rgb(169, 196, 228);
+  border: 1px solid black;
 }

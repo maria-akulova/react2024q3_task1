@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 }
+
+.app {
+  background-image: linear-gradient(10deg, #ede089 1%, #bad9ed 90%);
+  min-width: 768px;
+}

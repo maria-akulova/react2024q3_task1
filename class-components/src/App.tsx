@@ -1,56 +1,23 @@
-import { Component } from 'react';
-import { Animal, InputSearch, ResultSearch, Spinner } from './components/index.ts';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { Animals } from 'pages/animals/Animals';
+import { NotFound } from 'pages/notfound/NotFound';
 import './App.css';
-import api from './services/api.ts';
+import { AnimalDetails } from 'components/index';
 
-interface AppState {
-  animals: Animal[];
-  loading: boolean;
-  error: boolean;
-}
+const App: React.FC = () => {
+  return (
+    <div className="app">
+      <Routes>
+        <Route path="/page/:id" element={<Animals />}>
+          <Route path="details/:id" element={<AnimalDetails />} />
+        </Route>
+        <Route path="/*" element={<Animals />} />
 
-class App extends Component {
-  state: AppState = {
-    animals: [],
-    loading: false,
-    error: false,
-  };
-
-  componentDidMount() {
-    const previousSearch = localStorage.getItem('search');
-    previousSearch ? this.getAnimals(previousSearch) : this.getAnimals('');
-  }
-
-  getAnimals = async (searchTerm: string) => {
-    this.setState({ loading: true });
-    await api
-      .getAnimals(searchTerm)
-      .then((res) => {
-        this.setState({ animals: res.animals, loading: false });
-      })
-      .catch((err) => {
-        console.error('Failed to fetch animals', err);
-        this.setState({ loading: false });
-      });
-  };
-
-  render() {
-    const { animals, loading } = this.state;
-    if (this.state.error) {
-      throw Error('Test Error');
-    }
-
-    return (
-      <>
-        <h1 className="header">Animals</h1>
-        <InputSearch onSearch={this.getAnimals} />
-        <button className="errorButton" onClick={() => this.setState({ error: true })}>
-          Throw Test Error
-        </button>
-        {loading ? <Spinner /> : <ResultSearch animals={animals} />}
-      </>
-    );
-  }
-}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  );
+};
 
 export default App;

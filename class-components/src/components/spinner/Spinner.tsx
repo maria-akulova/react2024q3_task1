@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import style from './Spinner.module.scss';
 
-export class Spinner extends Component {
-  render(): React.ReactNode {
-    return (
-      <div className={style.spinner_overlay}>
-        <div className={style.spinner} />
-      </div>
-    );
-  }
-}
+export const Spinner: React.FC = () => {
+  return (
+    <div className={style.spinner_overlay}>
+      <div className={style.spinner} />
+    </div>
+  );
+};

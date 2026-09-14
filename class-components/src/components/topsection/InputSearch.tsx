@@ -1,56 +1,46 @@
-import { Component, ChangeEvent, MouseEvent } from 'react';
+import React, { ChangeEvent, MouseEvent } from 'react';
 import style from './InputSearch.module.scss';
-import { trunc } from '../../utils/HelperString.ts';
+import { trunc } from 'utils/HelperString.ts';
+import { useSearchQuery } from 'src/hooks/useSearchQuery';
 
 interface InputSearchProps {
   onSearch: (searchTerm: string) => void;
+  setCurrentPage: (currentPage: number) => void;
 }
 
-export class InputSearch extends Component<InputSearchProps> {
-  state = {
-    searchTerm: '',
+export const InputSearch: React.FC<InputSearchProps> = ({ onSearch, setCurrentPage }) => {
+  const [inputValue, setInputValue] = useSearchQuery();
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
   };
 
-  handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchTerm: event.target.value });
-  };
-
-  handleSearch = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleSearch = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const searchName = trunc(this.state.searchTerm);
-    this.setState({ searchTerm: searchName });
-    this.props.onSearch(searchName);
-    localStorage.setItem('search', searchName);
+    onSearch(trunc(inputValue));
+    setCurrentPage(1);
   };
 
-  componentDidMount(): void {
-    const historySearch: string | null = localStorage.getItem('search');
-    const result = historySearch ? historySearch : '';
-    this.setState({ searchTerm: result });
-  }
-
-  render() {
-    return (
-      <>
-        <label className={style.searchLabel} htmlFor="searchInput">
-          Search by Name of animal
-        </label>
-        <section>
-          <input
-            className={style.input}
-            type="text"
-            id="searchInput"
-            name="searchInput"
-            placeholder="Type to search..."
-            value={this.state.searchTerm}
-            onChange={this.handleInputChange}
-            maxLength={30}
-          />
-          <button className={style.searchButton} onClick={this.handleSearch}>
-            Search
-          </button>
-        </section>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <label className={style.searchLabel} htmlFor="searchInput">
+        Help the family to find interesting animal!
+      </label>
+      <section className={style.search_section}>
+        <input
+          className={style.input}
+          type="text"
+          id="searchInput"
+          name="searchInput"
+          placeholder="Type to search..."
+          value={inputValue}
+          onChange={handleInputChange}
+          maxLength={30}
+        />
+        <button className={style.searchButton} onClick={handleSearch}>
+          Search
+        </button>
+      </section>
+    </>
+  );
+};
