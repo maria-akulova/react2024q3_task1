@@ -12,7 +12,7 @@
   }
 }
 
-form {
+.form {
   position: relative;
   & input {
     display: none;
@@ -40,7 +40,7 @@ form {
   font-weight: 700;
 }
 
-label {
+.switch > label {
   height: 40px;
   top: 0px;
   align-content: center;

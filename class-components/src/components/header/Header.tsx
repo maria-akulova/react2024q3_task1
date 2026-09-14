@@ -10,7 +10,7 @@ export const Header: React.FC = () => {
       <div className={style.header}>
         <h1 className="header">Animals</h1>
         <div className={style.theme}>
-          <form action="" data-testid="theme-checkbox">
+          <form className={style.form} action="" data-testid="theme-checkbox">
             <input
               type="radio"
               name="rdo"
